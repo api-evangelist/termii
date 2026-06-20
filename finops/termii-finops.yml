@@ -1,0 +1,114 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Termii
+providerId: termii
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Messaging
+- SMS
+- OTP
+- WhatsApp
+- Verification
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Termii spend. Termii bills from a prepaid wallet on a
+  per-unit basis: per SMS segment, per WhatsApp message, per voice call, and
+  per OTP/token sent across SMS, voice, WhatsApp, and email channels. Unit
+  prices vary by destination country, network, channel, and route, so cost
+  modeling must be destination- and channel-aware. Per-unit rates are not
+  reconciled in this artifact.
+notes: >-
+  Termii does not publish a single flat rate card; per-unit prices depend on
+  destination and channel and should be pulled from the dashboard and verified
+  with an account manager during reconciliation.
+sources:
+- https://termii.com/pricing
+- https://developers.termii.com/
+- https://developers.termii.com/balance
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Termii
+serviceCategory: Communications and Messaging
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid
+  billingCurrency: NGN
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Termii Messaging
+  ServiceCategory: Communications and Messaging
+  ProviderName: Termii
+  PublisherName: Termii
+  InvoiceIssuerName: Termii
+  BillingCurrency: NGN
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: sms_messages
+  description: SMS segments sent, billed per unit by destination, network, and route.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+  - channel
+  - route
+- name: whatsapp_messages
+  description: WhatsApp messages sent, billed per unit by destination and conversation type.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+- name: voice_calls
+  description: Voice messages / calls placed, billed per unit by destination.
+  unit: calls
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+- name: tokens_sent
+  description: OTP/tokens sent (Send Token, Voice Token, Email Token), billed as the underlying channel unit.
+  unit: tokens
+  aggregation: sum
+  dimensions:
+  - account
+  - channel
+- name: number_messages
+  description: Messages sent via auto-generated messaging numbers, billed per unit by destination.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - destination_country
+- name: wallet_topups
+  description: Prepaid wallet funding (Purchase) credited to the account balance.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track wallet balance via /get-balance and pull /sms/inbox reports to attribute spend per message and channel.
+- name: Allocation
+  description: Tag campaigns and phonebooks to map message spend to teams, products, and customer cohorts.
+- name: Optimization
+  description: Route appropriately (DND vs. generic), consolidate sends into bulk requests, pick the cheapest viable channel, and avoid resends with delivery-report checks.
+- name: Accountability
+  description: Monitor prepaid burn against budget; set wallet top-up thresholds and review per-destination unit costs.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

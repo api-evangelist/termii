@@ -1,0 +1,299 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "in": "query"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Messaging", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send a message", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/send",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"to\":\"23490126727\",\"from\":\"Termii\",\"sms\":\"Hi there, testing Termii\",\"type\":\"plain\",\"channel\":\"generic\"}"
+            }
+          },
+          "docs": "Send a single message over SMS, WhatsApp, or voice using a registered sender ID."
+        },
+        {
+          "info": { "name": "Send a bulk message", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/send/bulk",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"to\":[\"23490126727\",\"23490126728\"],\"from\":\"Termii\",\"sms\":\"Hi there, testing Termii\",\"type\":\"plain\",\"channel\":\"generic\"}"
+            }
+          },
+          "docs": "Send a message to up to 100 recipients in one request."
+        },
+        {
+          "info": { "name": "Send via number", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/number/send",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"to\":\"2347089509111\",\"sms\":\"Hi there, testing Termii\"}"
+            }
+          },
+          "docs": "Send a message via an auto-generated messaging number."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Token", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/send",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"pin_type\":\"NUMERIC\",\"to\":\"23490126727\",\"from\":\"Termii\",\"channel\":\"generic\",\"pin_attempts\":3,\"pin_time_to_live\":5,\"pin_length\":6,\"pin_placeholder\":\"< 1234 >\",\"message_text\":\"Your pin is < 1234 >\"}"
+            }
+          },
+          "docs": "Send a one-time password across a messaging channel."
+        },
+        {
+          "info": { "name": "Send voice token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/send/voice",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"phone_number\":\"23490126727\",\"pin_attempts\":3,\"pin_time_to_live\":5,\"pin_length\":6}"
+            }
+          },
+          "docs": "Deliver a one-time password as an automated voice call."
+        },
+        {
+          "info": { "name": "Generate in-app token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/generate",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"pin_type\":\"NUMERIC\",\"phone_number\":\"23490126727\",\"pin_attempts\":3,\"pin_time_to_live\":5,\"pin_length\":6}"
+            }
+          },
+          "docs": "Generate an OTP and return it in the JSON response."
+        },
+        {
+          "info": { "name": "Verify token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/verify",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"pin_id\":\"c8dcd048-5e7f-4347-8c89-4470c3af0b\",\"pin\":\"195558\"}"
+            }
+          },
+          "docs": "Verify a PIN entered by a customer against a pin_id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Sender IDs", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Fetch sender IDs", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sender-id?api_key={{api_key}}"
+          },
+          "docs": "Retrieve all sender IDs on the account."
+        },
+        {
+          "info": { "name": "Request a sender ID", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sender-id/request",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"sender_id\":\"Acme\",\"use_case\":\"Your OTP is 1234\",\"company\":\"Acme Inc\"}"
+            }
+          },
+          "docs": "Submit a new alphanumeric sender ID for approval."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Campaigns", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Send a campaign", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/send",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"country_code\":\"NG\",\"sender_id\":\"Termii\",\"message\":\"Hello from Termii\",\"channel\":\"generic\",\"message_type\":\"plain\",\"phonebook_id\":\"PHONEBOOK_ID\",\"campaign_type\":\"personalized\",\"schedule_sms_status\":\"instant\"}"
+            }
+          },
+          "docs": "Send an SMS campaign to all contacts in a phonebook."
+        },
+        {
+          "info": { "name": "Fetch campaigns", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/campaigns?api_key={{api_key}}"
+          },
+          "docs": "Retrieve all campaigns on the account."
+        },
+        {
+          "info": { "name": "Fetch campaign history", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/{campaign_id}?api_key={{api_key}}"
+          },
+          "docs": "Retrieve the message history for a single campaign."
+        },
+        {
+          "info": { "name": "Retry a campaign", "type": "http" },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/{campaign_id}",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\"}"
+            }
+          },
+          "docs": "Retry sending a previously created campaign."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Contacts", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List phonebooks", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/phonebooks?api_key={{api_key}}"
+          },
+          "docs": "Retrieve all phonebooks on the account."
+        },
+        {
+          "info": { "name": "Create a phonebook", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"phonebook_name\":\"My Phonebook\",\"description\":\"Customers\"}"
+            }
+          },
+          "docs": "Create a new phonebook."
+        },
+        {
+          "info": { "name": "Update a phonebook", "type": "http" },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ng.termii.com/api/phonebooks/{phonebook_id}",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"phonebook_name\":\"Updated Name\",\"description\":\"Updated description\"}"
+            }
+          },
+          "docs": "Update an existing phonebook."
+        },
+        {
+          "info": { "name": "Delete a phonebook", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ng.termii.com/api/phonebooks/{phonebook_id}?api_key={{api_key}}"
+          },
+          "docs": "Delete a phonebook."
+        },
+        {
+          "info": { "name": "List contacts in a phonebook", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts?api_key={{api_key}}"
+          },
+          "docs": "List contacts within a phonebook."
+        },
+        {
+          "info": { "name": "Add a contact", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts",
+            "body": {
+              "type": "json",
+              "data": "{\"api_key\":\"{{api_key}}\",\"phone_number\":\"23490126727\",\"country_code\":\"234\",\"email_address\":\"jane@example.com\",\"first_name\":\"Jane\",\"last_name\":\"Doe\",\"company\":\"Acme\"}"
+            }
+          },
+          "docs": "Add a single contact to a phonebook."
+        },
+        {
+          "info": { "name": "Add contacts via file upload", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks/contacts/upload",
+            "body": {
+              "type": "multipart",
+              "data": "api_key={{api_key}}; country_code=234; pid=PHONEBOOK_ID; file=@contacts.csv"
+            }
+          },
+          "docs": "Bulk upload contacts to a phonebook from a CSV file."
+        },
+        {
+          "info": { "name": "Delete a contact", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts?api_key={{api_key}}",
+            "body": {
+              "type": "json",
+              "data": "{\"contact_id\":\"CONTACT_ID\"}"
+            }
+          },
+          "docs": "Delete a contact from a phonebook."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Insights", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get account balance", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/get-balance?api_key={{api_key}}"
+          },
+          "docs": "Retrieve the current wallet balance and currency."
+        },
+        {
+          "info": { "name": "Get message history", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/inbox?api_key={{api_key}}"
+          },
+          "docs": "Retrieve message reports, optionally filtered by message_id."
+        },
+        {
+          "info": { "name": "Query number status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/insight/number/query?api_key={{api_key}}&phone_number=2348753243651&country_code=NG"
+          },
+          "docs": "Detect whether a number is fake or has been ported."
+        }
+      ]
+    }
+  ]
+}

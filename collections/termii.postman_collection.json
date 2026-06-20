@@ -1,0 +1,484 @@
+{
+  "info": {
+    "name": "Termii API",
+    "description": "Termii multichannel messaging API - SMS, voice, WhatsApp, OTP/token, sender IDs, campaigns, contacts/phonebooks, and insights. Authenticate with api_key in the JSON body (POST/PATCH/DELETE) or as a query parameter (GET).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.ng.termii.com/api"
+    },
+    {
+      "key": "api_key",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Messaging",
+      "item": [
+        {
+          "name": "Send a message",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"to\": \"23490126727\",\n  \"from\": \"Termii\",\n  \"sms\": \"Hi there, testing Termii\",\n  \"type\": \"plain\",\n  \"channel\": \"generic\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Send a bulk message",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/send/bulk",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "send", "bulk"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"to\": [\"23490126727\", \"23490126728\"],\n  \"from\": \"Termii\",\n  \"sms\": \"Hi there, testing Termii\",\n  \"type\": \"plain\",\n  \"channel\": \"generic\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Send via number",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/number/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "number", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"to\": \"2347089509111\",\n  \"sms\": \"Hi there, testing Termii\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Token",
+      "item": [
+        {
+          "name": "Send token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/otp/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "otp", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"pin_type\": \"NUMERIC\",\n  \"to\": \"23490126727\",\n  \"from\": \"Termii\",\n  \"channel\": \"generic\",\n  \"pin_attempts\": 3,\n  \"pin_time_to_live\": 5,\n  \"pin_length\": 6,\n  \"pin_placeholder\": \"< 1234 >\",\n  \"message_text\": \"Your pin is < 1234 >\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Send voice token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/otp/send/voice",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "otp", "send", "voice"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"phone_number\": \"23490126727\",\n  \"pin_attempts\": 3,\n  \"pin_time_to_live\": 5,\n  \"pin_length\": 6\n}"
+            }
+          }
+        },
+        {
+          "name": "Generate in-app token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/otp/generate",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "otp", "generate"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"pin_type\": \"NUMERIC\",\n  \"phone_number\": \"23490126727\",\n  \"pin_attempts\": 3,\n  \"pin_time_to_live\": 5,\n  \"pin_length\": 6\n}"
+            }
+          }
+        },
+        {
+          "name": "Verify token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/otp/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "otp", "verify"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"pin_id\": \"c8dcd048-5e7f-4347-8c89-4470c3af0b\",\n  \"pin\": \"195558\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sender IDs",
+      "item": [
+        {
+          "name": "Fetch sender IDs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sender-id?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["sender-id"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Request a sender ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sender-id/request",
+              "host": ["{{baseUrl}}"],
+              "path": ["sender-id", "request"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"sender_id\": \"Acme\",\n  \"use_case\": \"Your OTP is 1234\",\n  \"company\": \"Acme Inc\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "Send a campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/campaigns/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "campaigns", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"country_code\": \"NG\",\n  \"sender_id\": \"Termii\",\n  \"message\": \"Hello from Termii\",\n  \"channel\": \"generic\",\n  \"message_type\": \"plain\",\n  \"phonebook_id\": \"PHONEBOOK_ID\",\n  \"campaign_type\": \"personalized\",\n  \"schedule_sms_status\": \"instant\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Fetch campaigns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sms/campaigns?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "campaigns"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Fetch campaign history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sms/campaigns/:campaign_id?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "campaigns", ":campaign_id"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ],
+              "variable": [
+                { "key": "campaign_id", "value": "CAMPAIGN_ID" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Retry a campaign",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sms/campaigns/:campaign_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "campaigns", ":campaign_id"],
+              "variable": [
+                { "key": "campaign_id", "value": "CAMPAIGN_ID" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "List phonebooks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create a phonebook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"phonebook_name\": \"My Phonebook\",\n  \"description\": \"Customers\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update a phonebook",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/:phonebook_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", ":phonebook_id"],
+              "variable": [
+                { "key": "phonebook_id", "value": "PHONEBOOK_ID" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"phonebook_name\": \"Updated Name\",\n  \"description\": \"Updated description\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete a phonebook",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/:phonebook_id?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", ":phonebook_id"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ],
+              "variable": [
+                { "key": "phonebook_id", "value": "PHONEBOOK_ID" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List contacts in a phonebook",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/:phonebook_id/contacts?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", ":phonebook_id", "contacts"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ],
+              "variable": [
+                { "key": "phonebook_id", "value": "PHONEBOOK_ID" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add a contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/:phonebook_id/contacts",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", ":phonebook_id", "contacts"],
+              "variable": [
+                { "key": "phonebook_id", "value": "PHONEBOOK_ID" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"{{api_key}}\",\n  \"phone_number\": \"23490126727\",\n  \"country_code\": \"234\",\n  \"email_address\": \"jane@example.com\",\n  \"first_name\": \"Jane\",\n  \"last_name\": \"Doe\",\n  \"company\": \"Acme\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add contacts via file upload",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/contacts/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", "contacts", "upload"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "api_key", "value": "{{api_key}}", "type": "text" },
+                { "key": "country_code", "value": "234", "type": "text" },
+                { "key": "pid", "value": "PHONEBOOK_ID", "type": "text" },
+                { "key": "file", "type": "file", "src": "contacts.csv" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete a contact",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/phonebooks/:phonebook_id/contacts?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["phonebooks", ":phonebook_id", "contacts"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ],
+              "variable": [
+                { "key": "phonebook_id", "value": "PHONEBOOK_ID" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contact_id\": \"CONTACT_ID\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Insights",
+      "item": [
+        {
+          "name": "Get account balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/get-balance?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["get-balance"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get message history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sms/inbox?api_key={{api_key}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["sms", "inbox"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" },
+                { "key": "message_id", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Query number status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/insight/number/query?api_key={{api_key}}&phone_number=2348753243651&country_code=NG",
+              "host": ["{{baseUrl}}"],
+              "path": ["insight", "number", "query"],
+              "query": [
+                { "key": "api_key", "value": "{{api_key}}" },
+                { "key": "phone_number", "value": "2348753243651" },
+                { "key": "country_code", "value": "NG" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

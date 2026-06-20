@@ -1,0 +1,172 @@
+aid: termii
+url: https://raw.githubusercontent.com/api-evangelist/termii/refs/heads/main/apis.yml
+name: Termii
+kind: company
+description: Termii is an African multichannel messaging platform whose REST API lets
+  businesses send SMS, voice, WhatsApp, and email; generate and verify one-time
+  passwords (OTP) for customer verification; manage sender IDs, campaigns, and
+  contact phonebooks; and pull insights such as account balance, message reports,
+  and number status. All requests authenticate with an api_key passed in the
+  request body or query string.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Messaging
+- SMS
+- OTP
+- WhatsApp
+- Verification
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: termii:messaging
+  name: Termii Messaging API
+  tags:
+  - Messaging
+  - SMS
+  - WhatsApp
+  - Voice
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/messaging-api
+    type: Documentation
+  - url: https://developers.termii.com/
+    type: APIReference
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Send single or bulk messages across SMS, WhatsApp, and voice channels
+    with a registered sender ID, plus send via an auto-generated messaging number
+    that adapts to the recipient's location.
+- aid: termii:token
+  name: Termii Token / OTP API
+  tags:
+  - OTP
+  - Token
+  - Verification
+  - Two-Factor
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/send-token
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/send-token
+    type: Documentation
+  - url: https://developers.termii.com/in-app-token
+    type: APIReference
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Generate, deliver, and verify one-time passwords across messaging
+    channels (Send Token), as a voice call (Voice Token), or returned in JSON for
+    your own delivery (In-App Token), then confirm codes with Verify Token.
+- aid: termii:sender-ids
+  name: Termii Sender IDs API
+  tags:
+  - Sender ID
+  - Registration
+  - Configuration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/sender-id
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/sender-id
+    type: Documentation
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Retrieve the sender IDs on an account (active, pending, or blocked)
+    and submit new alphanumeric sender IDs to Termii for review and approval.
+- aid: termii:campaigns
+  name: Termii Campaigns API
+  tags:
+  - Campaigns
+  - Bulk
+  - Scheduling
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/campaign
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/campaign
+    type: Documentation
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Launch SMS campaigns to a phonebook with optional scheduling and link
+    tracking, list past campaigns, fetch campaign history, and retry a campaign.
+- aid: termii:contacts
+  name: Termii Contacts / Phonebooks API
+  tags:
+  - Contacts
+  - Phonebooks
+  - Lists
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/phonebook
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/phonebook
+    type: Documentation
+  - url: https://developers.termii.com/contacts
+    type: APIReference
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Create, list, update, and delete phonebooks, and manage the contacts
+    within them - add a single contact, bulk upload contacts via CSV, list contacts,
+    and delete a contact.
+- aid: termii:insights
+  name: Termii Insights API
+  tags:
+  - Insights
+  - Balance
+  - Reports
+  - Status
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.termii.com/balance
+  baseURL: https://api.ng.termii.com/api
+  properties:
+  - url: https://developers.termii.com/balance
+    type: Documentation
+  - url: https://developers.termii.com/history
+    type: APIReference
+  - url: openapi/termii-openapi.yml
+    type: OpenAPI
+  - url: collections/termii.postman_collection.json
+    type: PostmanCollection
+  - url: collections/termii.opencollection.json
+    type: OpenCollection
+  description: Pull account-level insights - current wallet balance and currency,
+    message delivery history and reports, and number status queries that detect
+    fake or ported numbers.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/termii
+- type: Website
+  url: https://termii.com
+- type: Documentation
+  url: https://developers.termii.com/
+- type: Plans
+  url: plans/termii-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/termii-rate-limits.yml
+- type: FinOps
+  url: finops/termii-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

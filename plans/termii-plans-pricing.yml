@@ -1,0 +1,142 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Termii
+providerId: termii
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Messaging
+- SMS
+- OTP
+- WhatsApp
+- Verification
+- Plans
+description: >-
+  Termii uses a prepaid, pay-as-you-go wallet model. Customers fund a balance
+  (denominated in their account currency, e.g., NGN) and are charged per unit
+  of usage: per SMS page/segment, per OTP/token sent (SMS, voice, WhatsApp, or
+  email channel), per voice call, and per WhatsApp message. Unit prices vary by
+  destination country, network, channel, and route (e.g., DND vs. generic), and
+  are not published as flat global rates. Specific per-unit prices are not
+  reconciled in this artifact and must be confirmed in the Termii dashboard or
+  with sales.
+notes: >-
+  Termii does not publish a single fixed price list; rates are destination- and
+  channel-specific and visible on the dashboard. Per-unit values below are left
+  unreconciled and should be verified against the Termii dashboard and account
+  manager during reconciliation.
+sources:
+- https://termii.com/pricing
+- https://developers.termii.com/
+- https://developers.termii.com/balance
+plans:
+- id: termii-pay-as-you-go
+  name: Pay-as-you-go (Prepaid Wallet)
+  type: usage
+  description: >-
+    Prepaid wallet credited in the account currency and debited per message,
+    token, and voice unit consumed across all Termii channels.
+  entries:
+  - label: SMS Message
+    name: sms_message
+    type: usage
+    metric: messages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, varies by destination country, network, and route
+    userMultiplied: false
+  - label: WhatsApp Message
+    name: whatsapp_message
+    type: usage
+    metric: messages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, varies by destination and conversation type
+    userMultiplied: false
+  - label: Voice Message / Call
+    name: voice_message
+    type: usage
+    metric: calls
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, varies by destination
+    userMultiplied: false
+  - label: Send Token (OTP)
+    name: send_token
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, billed as the underlying channel message
+    userMultiplied: false
+  - label: Voice Token
+    name: voice_token
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, billed as a voice call
+    userMultiplied: false
+  - label: Email Token
+    name: email_token
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, varies by volume
+    userMultiplied: false
+  - label: Number (auto-generated messaging number)
+    name: number_message
+    type: usage
+    metric: messages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-unit, varies by destination
+    userMultiplied: false
+  elements:
+  - name: Messaging
+  - name: Token / OTP
+  - name: Campaigns
+  - name: Sender IDs
+  - name: Contacts / Phonebooks
+  - name: Insights
+- id: termii-enterprise
+  name: Enterprise / Volume
+  type: enterprise
+  description: >-
+    Negotiated volume pricing, dedicated routes, dedicated sender IDs, and
+    account management for high-volume senders. Contact Termii sales.
+  entries:
+  - label: Volume Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Routes
+  - name: Account Management
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

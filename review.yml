@@ -1,0 +1,86 @@
+aid: termii
+name: Termii
+review:
+  question: Does Termii expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Termii's API is a synchronous REST/JSON
+    API. It delivers asynchronous delivery updates via outbound HTTP webhooks
+    (the "Events and Reports" / Delivery Report and Inbound message callbacks),
+    not via a client-consumed WebSocket or Server-Sent Events stream. Webhooks
+    are provider-to-customer HTTP callbacks and are out of scope for AsyncAPI
+    streaming modeling here; no ws:// or wss:// surface is documented.
+findings:
+  summary: |
+    Termii does not publish a documented public WebSocket or SSE streaming
+    API. All documented endpoints are HTTPS REST under
+    https://api.ng.termii.com/api, authenticated with an api_key in the JSON
+    body (POST/PATCH/DELETE) or query string (GET). Asynchronous delivery
+    status and inbound messages are pushed to customer-hosted webhook URLs
+    (Events and Reports), which is an outbound HTTP callback mechanism rather
+    than a bidirectional or streaming transport.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.ng.termii.com/api
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: >-
+        Outbound HTTP POST callbacks to a customer-configured notify URL for
+        delivery reports and inbound messages (Events and Reports). Provider-to-
+        customer; not a client-consumed stream.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Termii developer docs as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.ng.termii.com/api/sms/send
+    - POST   https://api.ng.termii.com/api/sms/send/bulk
+    - POST   https://api.ng.termii.com/api/sms/number/send
+    - POST   https://api.ng.termii.com/api/sms/otp/send
+    - POST   https://api.ng.termii.com/api/sms/otp/send/voice
+    - POST   https://api.ng.termii.com/api/sms/otp/generate
+    - POST   https://api.ng.termii.com/api/sms/otp/verify
+    - GET    https://api.ng.termii.com/api/sender-id
+    - POST   https://api.ng.termii.com/api/sender-id/request
+    - POST   https://api.ng.termii.com/api/sms/campaigns/send
+    - GET    https://api.ng.termii.com/api/sms/campaigns
+    - GET    https://api.ng.termii.com/api/sms/campaigns/{campaign_id}
+    - PATCH  https://api.ng.termii.com/api/sms/campaigns/{campaign_id}
+    - GET    https://api.ng.termii.com/api/phonebooks
+    - POST   https://api.ng.termii.com/api/phonebooks
+    - PATCH  https://api.ng.termii.com/api/phonebooks/{phonebook_id}
+    - DELETE https://api.ng.termii.com/api/phonebooks/{phonebook_id}
+    - GET    https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts
+    - POST   https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts
+    - DELETE https://api.ng.termii.com/api/phonebooks/{phonebook_id}/contacts
+    - POST   https://api.ng.termii.com/api/phonebooks/contacts/upload
+    - GET    https://api.ng.termii.com/api/get-balance
+    - GET    https://api.ng.termii.com/api/sms/inbox
+    - GET    https://api.ng.termii.com/api/insight/number/query
+sources:
+  - url: https://developers.termii.com/
+    type: Documentation
+    note: API overview describes a REST/JSON API with api_key auth; no WebSocket mentioned.
+  - url: https://developers.termii.com/messaging-api
+    type: Documentation
+    note: Messaging send and send/bulk are HTTPS POST endpoints.
+  - url: https://developers.termii.com/send-token
+    type: Documentation
+    note: Token endpoints are HTTPS POST; verification is synchronous REST.
+  - url: https://developers.termii.com/events-and-reports
+    type: Documentation
+    note: Asynchronous updates are delivered via outbound webhooks, not a client stream.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE stream surface exists. Termii's only asynchronous
+    mechanism is outbound HTTP webhooks (delivery reports and inbound
+    messages), which are provider-to-customer callbacks and not modeled as
+    AsyncAPI streaming here. No AsyncAPI document was created.

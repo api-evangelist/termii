@@ -155,6 +155,10 @@ apis:
     message delivery history and reports, and number status queries that detect
     fake or ported numbers.
 common:
+- type: DomainSecurity
+  url: security/termii-domain-security.yml
+- type: Authentication
+  url: authentication/termii-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/termii
 - type: Website

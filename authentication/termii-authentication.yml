@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/termii-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: api_key
+  description: Termii authenticates every request with an api_key. For GET requests it is passed
+    as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the
+    JSON request body.
+  sources:
+  - openapi/termii-openapi.yml

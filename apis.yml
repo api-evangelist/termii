@@ -155,6 +155,8 @@ apis:
     message delivery history and reports, and number status queries that detect
     fake or ported numbers.
 common:
+- type: AgenticAccess
+  url: agentic-access/termii-agentic-access.yml
 - type: DomainSecurity
   url: security/termii-domain-security.yml
 - type: Authentication

@@ -1,0 +1,256 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Campaigns
+  description: Send, list, and manage SMS campaigns.
+paths:
+  /sms/campaigns/send:
+    post:
+      operationId: sendCampaign
+      tags:
+      - Campaigns
+      summary: Send a campaign
+      description: Send an SMS campaign to all contacts in a phonebook, with optional scheduling and link tracking.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCampaignRequest'
+      responses:
+        '200':
+          description: Campaign created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/campaigns:
+    get:
+      operationId: fetchCampaigns
+      tags:
+      - Campaigns
+      summary: Fetch campaigns
+      description: Retrieve all campaigns on the account.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of campaigns.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignList'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/campaigns/{campaign_id}:
+    get:
+      operationId: fetchCampaignHistory
+      tags:
+      - Campaigns
+      summary: Fetch campaign history
+      description: Retrieve the message history for a single campaign.
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Campaign history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignHistory'
+        '401':
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: retryCampaign
+      tags:
+      - Campaigns
+      summary: Retry a campaign
+      description: Retry sending a previously created campaign.
+      parameters:
+      - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKeyBody'
+      responses:
+        '200':
+          description: Campaign retry accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
+    CampaignId:
+      name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the campaign.
+  schemas:
+    ApiKeyBody:
+      type: object
+      required:
+      - api_key
+      properties:
+        api_key:
+          type: string
+          description: Your API key from the Termii dashboard.
+    Campaign:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+        phone_book:
+          type: string
+        sender:
+          type: string
+        camp_type:
+          type: string
+        channel:
+          type: string
+        total_recipients:
+          type: integer
+        run_at:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+    CampaignHistory:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              sender:
+                type: string
+              receiver:
+                type: string
+              message:
+                type: string
+              status:
+                type: string
+              sms_type:
+                type: string
+              send_at:
+                type: string
+        total:
+          type: integer
+    CampaignList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Campaign'
+        total:
+          type: integer
+    SendCampaignRequest:
+      type: object
+      required:
+      - api_key
+      - country_code
+      - sender_id
+      - message
+      - channel
+      - message_type
+      - phonebook_id
+      - campaign_type
+      - schedule_sms_status
+      properties:
+        api_key:
+          type: string
+        country_code:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        sender_id:
+          type: string
+        message:
+          type: string
+        channel:
+          type: string
+          enum:
+          - dnd
+          - generic
+          - whatsapp
+        message_type:
+          type: string
+          enum:
+          - plain
+          - unicode
+        phonebook_id:
+          type: string
+        campaign_type:
+          type: string
+        schedule_sms_status:
+          type: string
+          enum:
+          - scheduled
+          - instant
+        enable_link_tracking:
+          type: string
+          description: Optional. Enable click tracking on links in the campaign.
+        schedule_time:
+          type: string
+          description: Optional. Time to send a scheduled campaign.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

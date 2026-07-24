@@ -1,0 +1,190 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns Insights API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Insights
+  description: Account balance, message history, and number status.
+paths:
+  /get-balance:
+    get:
+      operationId: getBalance
+      tags:
+      - Insights
+      summary: Get account balance
+      description: Retrieve the current wallet balance and currency for the account.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Account balance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceResponse'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/inbox:
+    get:
+      operationId: getMessageHistory
+      tags:
+      - Insights
+      summary: Get message history / reports
+      description: Retrieve message reports across the account, or a single report when a message_id is supplied.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      - name: message_id
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter to a specific message report.
+      responses:
+        '200':
+          description: Message history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageHistory'
+        '401':
+          $ref: '#/components/responses/Error'
+  /insight/number/query:
+    get:
+      operationId: queryNumberStatus
+      tags:
+      - Insights
+      summary: Query number status
+      description: Detect whether a number is fake or has been ported to a new network. Requires activation through an account manager.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      - name: phone_number
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Phone number in international format (e.g., 2348753243651).
+      - name: country_code
+        in: query
+        required: true
+        schema:
+          type: string
+        description: ISO 3166-1 alpha-2 country code (e.g., NG).
+      responses:
+        '200':
+          description: Number status result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NumberStatusResponse'
+        '401':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
+  schemas:
+    BalanceResponse:
+      type: object
+      properties:
+        application:
+          type: string
+          example: TommyluxuryHair
+        balance:
+          type: number
+          example: 785.57
+        currency:
+          type: string
+          example: NGN
+        user:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    MessageHistory:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              sender:
+                type: string
+              receiver:
+                type: string
+              message:
+                type: string
+              amount:
+                type: number
+              reroute:
+                type: integer
+              status:
+                type: string
+              sms_type:
+                type: string
+              send_by:
+                type: string
+              media_url:
+                type: string
+              message_id:
+                type: string
+              notify_url:
+                type: string
+              notify_id:
+                type: string
+              created_at:
+                type: string
+    NumberStatusResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            network:
+              type: string
+            network_code:
+              type: string
+            country:
+              type: string
+            ported:
+              type: integer
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

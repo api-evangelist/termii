@@ -1,0 +1,238 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns Messaging API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Messaging
+  description: Send single, bulk, and number-based messages.
+paths:
+  /sms/send:
+    post:
+      operationId: sendMessage
+      tags:
+      - Messaging
+      summary: Send a message
+      description: Send a single message to one or more recipients over SMS, WhatsApp, or voice using a registered sender ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '200':
+          description: Message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/send/bulk:
+    post:
+      operationId: sendBulkMessage
+      tags:
+      - Messaging
+      summary: Send a bulk message
+      description: Send a message to up to 100 recipients in a single request. WhatsApp sends may include an optional media object.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendBulkMessageRequest'
+      responses:
+        '200':
+          description: Bulk message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/number/send:
+    post:
+      operationId: sendViaNumber
+      tags:
+      - Messaging
+      summary: Send a message via auto-generated number
+      description: Send a message using an auto-generated messaging number that adapts to the recipient's location. Does not require a registered sender ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNumberRequest'
+      responses:
+        '200':
+          description: Message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendNumberResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    SendMessageResponse:
+      type: object
+      properties:
+        message_id:
+          type: string
+        message:
+          type: string
+          example: Successfully Sent
+        balance:
+          type: number
+        user:
+          type: string
+    SendMessageRequest:
+      type: object
+      required:
+      - api_key
+      - to
+      - from
+      - sms
+      - type
+      - channel
+      properties:
+        api_key:
+          type: string
+        to:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          description: Destination phone number(s) in international format (up to 100).
+          example: '23490126727'
+        from:
+          type: string
+          description: Sender ID (alphanumeric, 3-11 characters) or device name for WhatsApp.
+        sms:
+          type: string
+          description: Message text to deliver.
+        type:
+          type: string
+          enum:
+          - plain
+          - unicode
+          - encrypted
+          - voice
+          description: Message format.
+        channel:
+          type: string
+          enum:
+          - dnd
+          - generic
+          - whatsapp
+          - voice
+          description: Routing channel.
+    Media:
+      type: object
+      description: Optional WhatsApp attachment.
+      properties:
+        url:
+          type: string
+          description: URL of the image, audio, or document.
+        caption:
+          type: string
+          description: Caption for the attachment.
+    SendNumberRequest:
+      type: object
+      required:
+      - api_key
+      - to
+      - sms
+      properties:
+        api_key:
+          type: string
+        to:
+          type: string
+          description: Destination phone number in international format.
+          example: '2349012672711'
+        sms:
+          type: string
+          description: Message text to send.
+    SendNumberResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: ok
+        message_id:
+          type: string
+        message:
+          type: string
+          example: Successfully Sent
+        balance:
+          type: number
+        user:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    SendBulkMessageRequest:
+      type: object
+      required:
+      - api_key
+      - to
+      - from
+      - sms
+      - type
+      - channel
+      properties:
+        api_key:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+          description: Up to 100 recipient phone numbers in international format.
+        from:
+          type: string
+          description: Sender ID (alphanumeric, 3-11 characters).
+        sms:
+          type: string
+        type:
+          type: string
+          enum:
+          - plain
+          - unicode
+          - encrypted
+        channel:
+          type: string
+          enum:
+          - dnd
+          - generic
+        media:
+          $ref: '#/components/schemas/Media'
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

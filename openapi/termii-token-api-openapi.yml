@@ -1,0 +1,289 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns Token API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Token
+  description: Generate, deliver, and verify one-time passwords.
+paths:
+  /sms/otp/send:
+    post:
+      operationId: sendToken
+      tags:
+      - Token
+      summary: Send token (OTP)
+      description: Trigger a randomized one-time password to a recipient across any supported messaging channel, with configurable length, attempts, and time-to-live. Returns a pin_id used to verify the token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTokenRequest'
+      responses:
+        '200':
+          description: Token sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/send/voice:
+    post:
+      operationId: sendVoiceToken
+      tags:
+      - Token
+      summary: Send voice token
+      description: Deliver a one-time password to a recipient as an automated voice call.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceTokenRequest'
+      responses:
+        '200':
+          description: Voice token sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/generate:
+    post:
+      operationId: generateInAppToken
+      tags:
+      - Token
+      summary: Generate in-app token
+      description: Generate an OTP and return it in the JSON response so your application can deliver it through its own channel.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InAppTokenRequest'
+      responses:
+        '200':
+          description: Token generated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InAppTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/verify:
+    post:
+      operationId: verifyToken
+      tags:
+      - Token
+      summary: Verify token
+      description: Verify a PIN entered by a customer against a previously issued pin_id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyTokenRequest'
+      responses:
+        '200':
+          description: Verification result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    InAppTokenRequest:
+      type: object
+      required:
+      - api_key
+      - pin_type
+      - phone_number
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
+      properties:
+        api_key:
+          type: string
+        pin_type:
+          type: string
+          enum:
+          - NUMERIC
+          - ALPHANUMERIC
+        phone_number:
+          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+    VoiceTokenRequest:
+      type: object
+      required:
+      - api_key
+      - phone_number
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
+      properties:
+        api_key:
+          type: string
+        phone_number:
+          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    SendTokenRequest:
+      type: object
+      required:
+      - api_key
+      - pin_type
+      - to
+      - from
+      - channel
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
+      - pin_placeholder
+      - message_text
+      properties:
+        api_key:
+          type: string
+        pin_type:
+          type: string
+          enum:
+          - NUMERIC
+          - ALPHANUMERIC
+        to:
+          type: string
+          description: Recipient phone number in international format.
+        from:
+          type: string
+          description: Sender ID.
+        channel:
+          type: string
+          enum:
+          - dnd
+          - generic
+          - whatsapp
+          - email
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+          description: Validity period in minutes.
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+        pin_placeholder:
+          type: string
+          description: Placeholder in message_text replaced by the generated PIN.
+          example: < 1234 >
+        message_text:
+          type: string
+          description: Message body containing the pin_placeholder.
+    InAppTokenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            pin_id:
+              type: string
+            otp:
+              type: string
+            phone_number:
+              type: string
+            phone_number_other:
+              type: string
+    SendTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        to:
+          type: string
+        smsStatus:
+          type: string
+    VerifyTokenRequest:
+      type: object
+      required:
+      - api_key
+      - pin_id
+      - pin
+      properties:
+        api_key:
+          type: string
+        pin_id:
+          type: string
+          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
+        pin:
+          type: string
+          example: '195558'
+    VerifyTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        verified:
+          oneOf:
+          - type: boolean
+          - type: string
+          description: Verification result or status (e.g., "Expired").
+        msisdn:
+          type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

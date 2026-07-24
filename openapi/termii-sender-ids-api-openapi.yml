@@ -1,0 +1,158 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns Sender IDs API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Sender IDs
+  description: Fetch and request alphanumeric sender IDs.
+paths:
+  /sender-id:
+    get:
+      operationId: fetchSenderIds
+      tags:
+      - Sender IDs
+      summary: Fetch sender IDs
+      description: Retrieve all sender IDs associated with the account, optionally filtered by name and/or status.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter sender IDs by name.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - pending
+          - blocked
+        description: Filter sender IDs by approval status.
+      responses:
+        '200':
+          description: A paginated list of sender IDs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenderIdList'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sender-id/request:
+    post:
+      operationId: requestSenderId
+      tags:
+      - Sender IDs
+      summary: Request a sender ID
+      description: Submit a new alphanumeric sender ID (3-11 characters) to Termii's team for review and approval.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestSenderIdRequest'
+      responses:
+        '200':
+          description: Sender ID request submitted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
+  schemas:
+    SenderIdList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SenderId'
+        total:
+          type: integer
+    RequestSenderIdRequest:
+      type: object
+      required:
+      - api_key
+      - sender_id
+      - use_case
+      - company
+      properties:
+        api_key:
+          type: string
+        sender_id:
+          type: string
+          description: Alphanumeric sender ID, 3-11 characters.
+        use_case:
+          type: string
+          description: Sample message that will be sent with this sender ID.
+        company:
+          type: string
+          description: Company name associated with the sender ID.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    SenderId:
+      type: object
+      properties:
+        sender_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - pending
+          - blocked
+        company:
+          type: string
+        usecase:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

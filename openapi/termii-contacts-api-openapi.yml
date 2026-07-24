@@ -1,0 +1,351 @@
+openapi: 3.0.1
+info:
+  title: Termii Campaigns Contacts API
+  description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+- url: https://api.ng.termii.com/api
+  description: Termii production API (Nigeria region endpoint)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Contacts
+  description: Manage phonebooks and the contacts within them.
+paths:
+  /phonebooks:
+    get:
+      operationId: listPhonebooks
+      tags:
+      - Contacts
+      summary: List phonebooks
+      description: Retrieve all phonebooks on the account with pagination.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of phonebooks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhonebookList'
+        '401':
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createPhonebook
+      tags:
+      - Contacts
+      summary: Create a phonebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePhonebookRequest'
+      responses:
+        '200':
+          description: Phonebook created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/{phonebook_id}:
+    patch:
+      operationId: updatePhonebook
+      tags:
+      - Contacts
+      summary: Update a phonebook
+      parameters:
+      - $ref: '#/components/parameters/PhonebookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePhonebookRequest'
+      responses:
+        '200':
+          description: Phonebook updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deletePhonebook
+      tags:
+      - Contacts
+      summary: Delete a phonebook
+      parameters:
+      - $ref: '#/components/parameters/PhonebookId'
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Phonebook deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/{phonebook_id}/contacts:
+    get:
+      operationId: listContacts
+      tags:
+      - Contacts
+      summary: List contacts in a phonebook
+      parameters:
+      - $ref: '#/components/parameters/PhonebookId'
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of contacts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactList'
+        '401':
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: addContact
+      tags:
+      - Contacts
+      summary: Add a contact to a phonebook
+      parameters:
+      - $ref: '#/components/parameters/PhonebookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddContactRequest'
+      responses:
+        '200':
+          description: Contact added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteContact
+      tags:
+      - Contacts
+      summary: Delete a contact
+      parameters:
+      - $ref: '#/components/parameters/PhonebookId'
+      - $ref: '#/components/parameters/ApiKeyQuery'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteContactRequest'
+      responses:
+        '200':
+          description: Contact deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/contacts/upload:
+    post:
+      operationId: uploadContacts
+      tags:
+      - Contacts
+      summary: Add contacts via file upload
+      description: Bulk upload contacts to a phonebook from a CSV file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadContactsRequest'
+      responses:
+        '200':
+          description: Contacts uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
+    PhonebookId:
+      name: phonebook_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the phonebook.
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+        phone_number:
+          type: string
+        email_address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company:
+          type: string
+        country_code:
+          type: string
+    UploadContactsRequest:
+      type: object
+      required:
+      - api_key
+      - file
+      - country_code
+      - pid
+      properties:
+        api_key:
+          type: string
+        file:
+          type: string
+          format: binary
+          description: CSV file of contacts.
+        country_code:
+          type: string
+        pid:
+          type: string
+          description: Phonebook ID to upload contacts into.
+    CreatePhonebookRequest:
+      type: object
+      required:
+      - api_key
+      - phonebook_name
+      properties:
+        api_key:
+          type: string
+        phonebook_name:
+          type: string
+        description:
+          type: string
+    DeleteContactRequest:
+      type: object
+      properties:
+        contact_id:
+          type: string
+          description: Identifier of the contact to delete.
+    Phonebook:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        total_number_of_contacts:
+          type: integer
+        date_created:
+          type: string
+        last_updated:
+          type: string
+    ContactList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            total:
+              type: integer
+    UpdatePhonebookRequest:
+      type: object
+      required:
+      - api_key
+      - phonebook_name
+      - description
+      properties:
+        api_key:
+          type: string
+        phonebook_name:
+          type: string
+        description:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    PhonebookList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Phonebook'
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            total:
+              type: integer
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    AddContactRequest:
+      type: object
+      required:
+      - api_key
+      - phone_number
+      properties:
+        api_key:
+          type: string
+        phone_number:
+          type: string
+        country_code:
+          type: string
+        email_address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company:
+          type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: Termii authenticates every request with an api_key. For GET requests it is passed as the api_key query parameter; for POST, PATCH, and DELETE requests it is included in the JSON request body.

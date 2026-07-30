@@ -8,7 +8,20 @@ description: Termii is an African multichannel messaging platform whose REST API
   contact phonebooks; and pull insights such as account balance, message reports,
   and number status. All requests authenticate with an api_key passed in the
   request body or query string.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/termii.png
 tags:
 - Messaging
 - SMS
@@ -19,141 +32,210 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: termii:messaging
-  name: Termii Messaging API
-  tags:
-  - Messaging
-  - SMS
-  - WhatsApp
-  - Voice
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: termii:termii-campaigns-api
+  name: Termii Campaigns API
+  description: Send, list, and manage SMS campaigns.
   humanURL: https://developers.termii.com/messaging-api
   baseURL: https://api.ng.termii.com/api
-  properties:
-  - url: https://developers.termii.com/messaging-api
-    type: Documentation
-  - url: https://developers.termii.com/
-    type: APIReference
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Send single or bulk messages across SMS, WhatsApp, and voice channels
-    with a registered sender ID, plus send via an auto-generated messaging number
-    that adapts to the recipient's location.
-- aid: termii:token
-  name: Termii Token / OTP API
-  tags:
-  - OTP
-  - Token
-  - Verification
-  - Two-Factor
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.termii.com/send-token
-  baseURL: https://api.ng.termii.com/api
-  properties:
-  - url: https://developers.termii.com/send-token
-    type: Documentation
-  - url: https://developers.termii.com/in-app-token
-    type: APIReference
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Generate, deliver, and verify one-time passwords across messaging
-    channels (Send Token), as a voice call (Voice Token), or returned in JSON for
-    your own delivery (In-App Token), then confirm codes with Verify Token.
-- aid: termii:sender-ids
-  name: Termii Sender IDs API
-  tags:
-  - Sender ID
-  - Registration
-  - Configuration
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.termii.com/sender-id
-  baseURL: https://api.ng.termii.com/api
-  properties:
-  - url: https://developers.termii.com/sender-id
-    type: Documentation
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Retrieve the sender IDs on an account (active, pending, or blocked)
-    and submit new alphanumeric sender IDs to Termii for review and approval.
-- aid: termii:campaigns
-  name: Termii Campaigns API
   tags:
   - Campaigns
-  - Bulk
-  - Scheduling
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.termii.com/campaign
-  baseURL: https://api.ng.termii.com/api
   properties:
-  - url: https://developers.termii.com/campaign
-    type: Documentation
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Launch SMS campaigns to a phonebook with optional scheduling and link
-    tracking, list past campaigns, fetch campaign history, and retry a campaign.
-- aid: termii:contacts
-  name: Termii Contacts / Phonebooks API
+  - type: OpenAPI
+    url: openapi/termii-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
+- aid: termii:termii-contacts-api
+  name: Termii Contacts API
+  description: Manage phonebooks and the contacts within them.
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
   tags:
   - Contacts
-  - Phonebooks
-  - Lists
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.termii.com/phonebook
-  baseURL: https://api.ng.termii.com/api
   properties:
-  - url: https://developers.termii.com/phonebook
-    type: Documentation
-  - url: https://developers.termii.com/contacts
-    type: APIReference
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Create, list, update, and delete phonebooks, and manage the contacts
-    within them - add a single contact, bulk upload contacts via CSV, list contacts,
-    and delete a contact.
-- aid: termii:insights
+  - type: OpenAPI
+    url: openapi/termii-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
+- aid: termii:termii-insights-api
   name: Termii Insights API
+  description: Account balance, message history, and number status.
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
   tags:
   - Insights
-  - Balance
-  - Reports
-  - Status
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.termii.com/balance
-  baseURL: https://api.ng.termii.com/api
   properties:
-  - url: https://developers.termii.com/balance
-    type: Documentation
-  - url: https://developers.termii.com/history
-    type: APIReference
-  - url: openapi/termii-openapi.yml
-    type: OpenAPI
-  - url: collections/termii.postman_collection.json
-    type: PostmanCollection
-  - url: collections/termii.opencollection.json
-    type: OpenCollection
-  description: Pull account-level insights - current wallet balance and currency,
-    message delivery history and reports, and number status queries that detect
-    fake or ported numbers.
+  - type: OpenAPI
+    url: openapi/termii-insights-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
+- aid: termii:termii-messaging-api
+  name: Termii Messaging API
+  description: Send single, bulk, and number-based messages.
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
+  tags:
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/termii-messaging-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
+- aid: termii:termii-sender-ids-api
+  name: Termii Sender IDs API
+  description: Fetch and request alphanumeric sender IDs.
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
+  tags:
+  - Sender IDs
+  properties:
+  - type: OpenAPI
+    url: openapi/termii-sender-ids-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
+- aid: termii:termii-token-api
+  name: Termii Token API
+  description: Generate, deliver, and verify one-time passwords.
+  humanURL: https://developers.termii.com/messaging-api
+  baseURL: https://api.ng.termii.com/api
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/termii-token-api-openapi.yml
+  - type: Documentation
+    url: https://developers.termii.com/messaging-api
+  - type: APIReference
+    url: https://developers.termii.com/
+  - type: PostmanCollection
+    url: collections/termii.postman_collection.json
+  - type: OpenCollection
+    url: collections/termii.opencollection.json
+  - type: Documentation
+    url: https://developers.termii.com/send-token
+  - type: APIReference
+    url: https://developers.termii.com/in-app-token
+  - type: Documentation
+    url: https://developers.termii.com/sender-id
+  - type: Documentation
+    url: https://developers.termii.com/campaign
+  - type: Documentation
+    url: https://developers.termii.com/phonebook
+  - type: APIReference
+    url: https://developers.termii.com/contacts
+  - type: Documentation
+    url: https://developers.termii.com/balance
+  - type: APIReference
+    url: https://developers.termii.com/history
 common:
 - type: AgenticAccess
   url: agentic-access/termii-agentic-access.yml

@@ -1,0 +1,1257 @@
+openapi: 3.0.1
+info:
+  title: Termii API
+  description: >-
+    REST API for the Termii multichannel messaging platform. Send SMS, voice,
+    and WhatsApp messages; generate and verify one-time passwords (OTP) for
+    customer verification; manage sender IDs, campaigns, and contact
+    phonebooks; and retrieve insights such as account balance, message reports,
+    and number status. Every request authenticates with an `api_key` supplied
+    in the JSON request body (for POST/PATCH/DELETE) or as a query parameter
+    (for GET).
+  termsOfService: https://termii.com/terms-and-conditions
+  contact:
+    name: Termii Support
+    email: support@termii.com
+    url: https://developers.termii.com/
+  version: '1.0'
+servers:
+  - url: https://api.ng.termii.com/api
+    description: Termii production API (Nigeria region endpoint)
+tags:
+  - name: Messaging
+    description: Send single, bulk, and number-based messages.
+  - name: Token
+    description: Generate, deliver, and verify one-time passwords.
+  - name: Sender IDs
+    description: Fetch and request alphanumeric sender IDs.
+  - name: Campaigns
+    description: Send, list, and manage SMS campaigns.
+  - name: Contacts
+    description: Manage phonebooks and the contacts within them.
+  - name: Insights
+    description: Account balance, message history, and number status.
+paths:
+  /sms/send:
+    post:
+      operationId: sendMessage
+      tags:
+        - Messaging
+      summary: Send a message
+      description: >-
+        Send a single message to one or more recipients over SMS, WhatsApp, or
+        voice using a registered sender ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '200':
+          description: Message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/send/bulk:
+    post:
+      operationId: sendBulkMessage
+      tags:
+        - Messaging
+      summary: Send a bulk message
+      description: >-
+        Send a message to up to 100 recipients in a single request. WhatsApp
+        sends may include an optional media object.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendBulkMessageRequest'
+      responses:
+        '200':
+          description: Bulk message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/number/send:
+    post:
+      operationId: sendViaNumber
+      tags:
+        - Messaging
+      summary: Send a message via auto-generated number
+      description: >-
+        Send a message using an auto-generated messaging number that adapts to
+        the recipient's location. Does not require a registered sender ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNumberRequest'
+      responses:
+        '200':
+          description: Message accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendNumberResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/send:
+    post:
+      operationId: sendToken
+      tags:
+        - Token
+      summary: Send token (OTP)
+      description: >-
+        Trigger a randomized one-time password to a recipient across any
+        supported messaging channel, with configurable length, attempts, and
+        time-to-live. Returns a pin_id used to verify the token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTokenRequest'
+      responses:
+        '200':
+          description: Token sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/send/voice:
+    post:
+      operationId: sendVoiceToken
+      tags:
+        - Token
+      summary: Send voice token
+      description: >-
+        Deliver a one-time password to a recipient as an automated voice call.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceTokenRequest'
+      responses:
+        '200':
+          description: Voice token sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/generate:
+    post:
+      operationId: generateInAppToken
+      tags:
+        - Token
+      summary: Generate in-app token
+      description: >-
+        Generate an OTP and return it in the JSON response so your application
+        can deliver it through its own channel.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InAppTokenRequest'
+      responses:
+        '200':
+          description: Token generated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InAppTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/otp/verify:
+    post:
+      operationId: verifyToken
+      tags:
+        - Token
+      summary: Verify token
+      description: >-
+        Verify a PIN entered by a customer against a previously issued pin_id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyTokenRequest'
+      responses:
+        '200':
+          description: Verification result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyTokenResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sender-id:
+    get:
+      operationId: fetchSenderIds
+      tags:
+        - Sender IDs
+      summary: Fetch sender IDs
+      description: >-
+        Retrieve all sender IDs associated with the account, optionally
+        filtered by name and/or status.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter sender IDs by name.
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [active, pending, blocked]
+          description: Filter sender IDs by approval status.
+      responses:
+        '200':
+          description: A paginated list of sender IDs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenderIdList'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sender-id/request:
+    post:
+      operationId: requestSenderId
+      tags:
+        - Sender IDs
+      summary: Request a sender ID
+      description: >-
+        Submit a new alphanumeric sender ID (3-11 characters) to Termii's team
+        for review and approval.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestSenderIdRequest'
+      responses:
+        '200':
+          description: Sender ID request submitted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/campaigns/send:
+    post:
+      operationId: sendCampaign
+      tags:
+        - Campaigns
+      summary: Send a campaign
+      description: >-
+        Send an SMS campaign to all contacts in a phonebook, with optional
+        scheduling and link tracking.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCampaignRequest'
+      responses:
+        '200':
+          description: Campaign created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /sms/campaigns:
+    get:
+      operationId: fetchCampaigns
+      tags:
+        - Campaigns
+      summary: Fetch campaigns
+      description: Retrieve all campaigns on the account.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of campaigns.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignList'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/campaigns/{campaign_id}:
+    get:
+      operationId: fetchCampaignHistory
+      tags:
+        - Campaigns
+      summary: Fetch campaign history
+      description: Retrieve the message history for a single campaign.
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Campaign history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignHistory'
+        '401':
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: retryCampaign
+      tags:
+        - Campaigns
+      summary: Retry a campaign
+      description: Retry sending a previously created campaign.
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKeyBody'
+      responses:
+        '200':
+          description: Campaign retry accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks:
+    get:
+      operationId: listPhonebooks
+      tags:
+        - Contacts
+      summary: List phonebooks
+      description: Retrieve all phonebooks on the account with pagination.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of phonebooks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhonebookList'
+        '401':
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createPhonebook
+      tags:
+        - Contacts
+      summary: Create a phonebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePhonebookRequest'
+      responses:
+        '200':
+          description: Phonebook created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/{phonebook_id}:
+    patch:
+      operationId: updatePhonebook
+      tags:
+        - Contacts
+      summary: Update a phonebook
+      parameters:
+        - $ref: '#/components/parameters/PhonebookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePhonebookRequest'
+      responses:
+        '200':
+          description: Phonebook updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deletePhonebook
+      tags:
+        - Contacts
+      summary: Delete a phonebook
+      parameters:
+        - $ref: '#/components/parameters/PhonebookId'
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Phonebook deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/{phonebook_id}/contacts:
+    get:
+      operationId: listContacts
+      tags:
+        - Contacts
+      summary: List contacts in a phonebook
+      parameters:
+        - $ref: '#/components/parameters/PhonebookId'
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: A list of contacts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactList'
+        '401':
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: addContact
+      tags:
+        - Contacts
+      summary: Add a contact to a phonebook
+      parameters:
+        - $ref: '#/components/parameters/PhonebookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddContactRequest'
+      responses:
+        '200':
+          description: Contact added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deleteContact
+      tags:
+        - Contacts
+      summary: Delete a contact
+      parameters:
+        - $ref: '#/components/parameters/PhonebookId'
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteContactRequest'
+      responses:
+        '200':
+          description: Contact deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /phonebooks/contacts/upload:
+    post:
+      operationId: uploadContacts
+      tags:
+        - Contacts
+      summary: Add contacts via file upload
+      description: Bulk upload contacts to a phonebook from a CSV file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadContactsRequest'
+      responses:
+        '200':
+          description: Contacts uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessageResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /get-balance:
+    get:
+      operationId: getBalance
+      tags:
+        - Insights
+      summary: Get account balance
+      description: Retrieve the current wallet balance and currency for the account.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+      responses:
+        '200':
+          description: Account balance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceResponse'
+        '401':
+          $ref: '#/components/responses/Error'
+  /sms/inbox:
+    get:
+      operationId: getMessageHistory
+      tags:
+        - Insights
+      summary: Get message history / reports
+      description: >-
+        Retrieve message reports across the account, or a single report when a
+        message_id is supplied.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+        - name: message_id
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter to a specific message report.
+      responses:
+        '200':
+          description: Message history.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageHistory'
+        '401':
+          $ref: '#/components/responses/Error'
+  /insight/number/query:
+    get:
+      operationId: queryNumberStatus
+      tags:
+        - Insights
+      summary: Query number status
+      description: >-
+        Detect whether a number is fake or has been ported to a new network.
+        Requires activation through an account manager.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyQuery'
+        - name: phone_number
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Phone number in international format (e.g., 2348753243651).
+        - name: country_code
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ISO 3166-1 alpha-2 country code (e.g., NG).
+      responses:
+        '200':
+          description: Number status result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NumberStatusResponse'
+        '401':
+          $ref: '#/components/responses/Error'
+components:
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
+    PhonebookId:
+      name: phonebook_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the phonebook.
+    CampaignId:
+      name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the campaign.
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ApiKeyBody:
+      type: object
+      required:
+        - api_key
+      properties:
+        api_key:
+          type: string
+          description: Your API key from the Termii dashboard.
+    SendMessageRequest:
+      type: object
+      required:
+        - api_key
+        - to
+        - from
+        - sms
+        - type
+        - channel
+      properties:
+        api_key:
+          type: string
+        to:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+          description: Destination phone number(s) in international format (up to 100).
+          example: '23490126727'
+        from:
+          type: string
+          description: Sender ID (alphanumeric, 3-11 characters) or device name for WhatsApp.
+        sms:
+          type: string
+          description: Message text to deliver.
+        type:
+          type: string
+          enum: [plain, unicode, encrypted, voice]
+          description: Message format.
+        channel:
+          type: string
+          enum: [dnd, generic, whatsapp, voice]
+          description: Routing channel.
+    SendBulkMessageRequest:
+      type: object
+      required:
+        - api_key
+        - to
+        - from
+        - sms
+        - type
+        - channel
+      properties:
+        api_key:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+          description: Up to 100 recipient phone numbers in international format.
+        from:
+          type: string
+          description: Sender ID (alphanumeric, 3-11 characters).
+        sms:
+          type: string
+        type:
+          type: string
+          enum: [plain, unicode, encrypted]
+        channel:
+          type: string
+          enum: [dnd, generic]
+        media:
+          $ref: '#/components/schemas/Media'
+    Media:
+      type: object
+      description: Optional WhatsApp attachment.
+      properties:
+        url:
+          type: string
+          description: URL of the image, audio, or document.
+        caption:
+          type: string
+          description: Caption for the attachment.
+    SendMessageResponse:
+      type: object
+      properties:
+        message_id:
+          type: string
+        message:
+          type: string
+          example: Successfully Sent
+        balance:
+          type: number
+        user:
+          type: string
+    SendNumberRequest:
+      type: object
+      required:
+        - api_key
+        - to
+        - sms
+      properties:
+        api_key:
+          type: string
+        to:
+          type: string
+          description: Destination phone number in international format.
+          example: '2349012672711'
+        sms:
+          type: string
+          description: Message text to send.
+    SendNumberResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: ok
+        message_id:
+          type: string
+        message:
+          type: string
+          example: Successfully Sent
+        balance:
+          type: number
+        user:
+          type: string
+    SendTokenRequest:
+      type: object
+      required:
+        - api_key
+        - pin_type
+        - to
+        - from
+        - channel
+        - pin_attempts
+        - pin_time_to_live
+        - pin_length
+        - pin_placeholder
+        - message_text
+      properties:
+        api_key:
+          type: string
+        pin_type:
+          type: string
+          enum: [NUMERIC, ALPHANUMERIC]
+        to:
+          type: string
+          description: Recipient phone number in international format.
+        from:
+          type: string
+          description: Sender ID.
+        channel:
+          type: string
+          enum: [dnd, generic, whatsapp, email]
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+          description: Validity period in minutes.
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+        pin_placeholder:
+          type: string
+          description: Placeholder in message_text replaced by the generated PIN.
+          example: '< 1234 >'
+        message_text:
+          type: string
+          description: Message body containing the pin_placeholder.
+    SendTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        to:
+          type: string
+        smsStatus:
+          type: string
+    VoiceTokenRequest:
+      type: object
+      required:
+        - api_key
+        - phone_number
+        - pin_attempts
+        - pin_time_to_live
+        - pin_length
+      properties:
+        api_key:
+          type: string
+        phone_number:
+          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+    InAppTokenRequest:
+      type: object
+      required:
+        - api_key
+        - pin_type
+        - phone_number
+        - pin_attempts
+        - pin_time_to_live
+        - pin_length
+      properties:
+        api_key:
+          type: string
+        pin_type:
+          type: string
+          enum: [NUMERIC, ALPHANUMERIC]
+        phone_number:
+          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+    InAppTokenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            pin_id:
+              type: string
+            otp:
+              type: string
+            phone_number:
+              type: string
+            phone_number_other:
+              type: string
+    VerifyTokenRequest:
+      type: object
+      required:
+        - api_key
+        - pin_id
+        - pin
+      properties:
+        api_key:
+          type: string
+        pin_id:
+          type: string
+          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
+        pin:
+          type: string
+          example: '195558'
+    VerifyTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        verified:
+          oneOf:
+            - type: boolean
+            - type: string
+          description: Verification result or status (e.g., "Expired").
+        msisdn:
+          type: string
+    RequestSenderIdRequest:
+      type: object
+      required:
+        - api_key
+        - sender_id
+        - use_case
+        - company
+      properties:
+        api_key:
+          type: string
+        sender_id:
+          type: string
+          description: Alphanumeric sender ID, 3-11 characters.
+        use_case:
+          type: string
+          description: Sample message that will be sent with this sender ID.
+        company:
+          type: string
+          description: Company name associated with the sender ID.
+    SenderIdList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SenderId'
+        total:
+          type: integer
+    SenderId:
+      type: object
+      properties:
+        sender_id:
+          type: string
+        status:
+          type: string
+          enum: [active, pending, blocked]
+        company:
+          type: string
+        usecase:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+    SendCampaignRequest:
+      type: object
+      required:
+        - api_key
+        - country_code
+        - sender_id
+        - message
+        - channel
+        - message_type
+        - phonebook_id
+        - campaign_type
+        - schedule_sms_status
+      properties:
+        api_key:
+          type: string
+        country_code:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        sender_id:
+          type: string
+        message:
+          type: string
+        channel:
+          type: string
+          enum: [dnd, generic, whatsapp]
+        message_type:
+          type: string
+          enum: [plain, unicode]
+        phonebook_id:
+          type: string
+        campaign_type:
+          type: string
+        schedule_sms_status:
+          type: string
+          enum: [scheduled, instant]
+        enable_link_tracking:
+          type: string
+          description: Optional. Enable click tracking on links in the campaign.
+        schedule_time:
+          type: string
+          description: Optional. Time to send a scheduled campaign.
+    CampaignList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Campaign'
+        total:
+          type: integer
+    Campaign:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+        phone_book:
+          type: string
+        sender:
+          type: string
+        camp_type:
+          type: string
+        channel:
+          type: string
+        total_recipients:
+          type: integer
+        run_at:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+    CampaignHistory:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              sender:
+                type: string
+              receiver:
+                type: string
+              message:
+                type: string
+              status:
+                type: string
+              sms_type:
+                type: string
+              send_at:
+                type: string
+        total:
+          type: integer
+    CreatePhonebookRequest:
+      type: object
+      required:
+        - api_key
+        - phonebook_name
+      properties:
+        api_key:
+          type: string
+        phonebook_name:
+          type: string
+        description:
+          type: string
+    UpdatePhonebookRequest:
+      type: object
+      required:
+        - api_key
+        - phonebook_name
+        - description
+      properties:
+        api_key:
+          type: string
+        phonebook_name:
+          type: string
+        description:
+          type: string
+    PhonebookList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Phonebook'
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            total:
+              type: integer
+    Phonebook:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        total_number_of_contacts:
+          type: integer
+        date_created:
+          type: string
+        last_updated:
+          type: string
+    AddContactRequest:
+      type: object
+      required:
+        - api_key
+        - phone_number
+      properties:
+        api_key:
+          type: string
+        phone_number:
+          type: string
+        country_code:
+          type: string
+        email_address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company:
+          type: string
+    DeleteContactRequest:
+      type: object
+      properties:
+        contact_id:
+          type: string
+          description: Identifier of the contact to delete.
+    UploadContactsRequest:
+      type: object
+      required:
+        - api_key
+        - file
+        - country_code
+        - pid
+      properties:
+        api_key:
+          type: string
+        file:
+          type: string
+          format: binary
+          description: CSV file of contacts.
+        country_code:
+          type: string
+        pid:
+          type: string
+          description: Phonebook ID to upload contacts into.
+    ContactList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            total:
+              type: integer
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+        phone_number:
+          type: string
+        email_address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company:
+          type: string
+        country_code:
+          type: string
+    BalanceResponse:
+      type: object
+      properties:
+        application:
+          type: string
+          example: TommyluxuryHair
+        balance:
+          type: number
+          example: 785.57
+        currency:
+          type: string
+          example: NGN
+        user:
+          type: string
+    MessageHistory:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              sender:
+                type: string
+              receiver:
+                type: string
+              message:
+                type: string
+              amount:
+                type: number
+              reroute:
+                type: integer
+              status:
+                type: string
+              sms_type:
+                type: string
+              send_by:
+                type: string
+              media_url:
+                type: string
+              message_id:
+                type: string
+              notify_url:
+                type: string
+              notify_id:
+                type: string
+              created_at:
+                type: string
+    NumberStatusResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            network:
+              type: string
+            network_code:
+              type: string
+            country:
+              type: string
+            ported:
+              type: integer
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: >-
+        Termii authenticates every request with an api_key. For GET requests it
+        is passed as the api_key query parameter; for POST, PATCH, and DELETE
+        requests it is included in the JSON request body.
+security:
+  - ApiKeyAuth: []

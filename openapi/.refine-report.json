@@ -1,0 +1,24 @@
+{
+  "provider": "termii",
+  "sources": [
+    "termii-campaigns-api-openapi.yml",
+    "termii-contacts-api-openapi.yml",
+    "termii-insights-api-openapi.yml",
+    "termii-messaging-api-openapi.yml",
+    "termii-sender-ids-api-openapi.yml",
+    "termii-token-api-openapi.yml"
+  ],
+  "outputs": [
+    "termii-campaigns-api-openapi.yml",
+    "termii-contacts-api-openapi.yml",
+    "termii-insights-api-openapi.yml",
+    "termii-messaging-api-openapi.yml",
+    "termii-sender-ids-api-openapi.yml",
+    "termii-token-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

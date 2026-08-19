@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns Insights API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Insights",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/get-balance",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "Retrieve the current wallet balance and currency for the account."
+        },
+        {
+          "info": {
+            "name": "Get message history / reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/inbox",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              },
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a specific message report."
+              }
+            ]
+          },
+          "docs": "Retrieve message reports across the account, or a single report when a message_id is supplied."
+        },
+        {
+          "info": {
+            "name": "Query number status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/insight/number/query",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Phone number in international format (e.g., 2348753243651)."
+              },
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166-1 alpha-2 country code (e.g., NG)."
+              }
+            ]
+          },
+          "docs": "Detect whether a number is fake or has been ported to a new network. Requires activation through an account manager."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an SMS campaign to all contacts in a phonebook, with optional scheduling and link tracking."
+        },
+        {
+          "info": {
+            "name": "Fetch campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/campaigns",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "Retrieve all campaigns on the account."
+        },
+        {
+          "info": {
+            "name": "Fetch campaign history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the campaign."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "Retrieve the message history for a single campaign."
+        },
+        {
+          "info": {
+            "name": "Retry a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ng.termii.com/api/sms/campaigns/:campaign_id",
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the campaign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retry sending a previously created campaign."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

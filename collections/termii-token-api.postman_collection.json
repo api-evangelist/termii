@@ -1,0 +1,652 @@
+{
+  "item": [
+    {
+      "id": "90224107-4f7d-4ce8-a9e9-29927e963ec5",
+      "name": "Token",
+      "description": {
+        "content": "Generate, deliver, and verify one-time passwords.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4c170093-81ca-4c55-b5fa-dcbc71f60f42",
+          "name": "Send token (OTP)",
+          "request": {
+            "name": "Send token (OTP)",
+            "description": {
+              "content": "Trigger a randomized one-time password to a recipient across any supported messaging channel, with configurable length, attempts, and time-to-live. Returns a pin_id used to verify the token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "otp",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\",\n  \"pin_placeholder\": \"<string>\",\n  \"message_text\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a9369672-44f7-4e84-adc6-14d502914d82",
+              "name": "Token sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\",\n  \"pin_placeholder\": \"< 1234 >\",\n  \"message_text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pinId\": \"string\",\n  \"to\": \"string\",\n  \"smsStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d85789b2-60e0-4583-bab6-c484bc323ac6",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\",\n  \"pin_placeholder\": \"< 1234 >\",\n  \"message_text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce12fe89-a043-40c7-a79e-ffe64208523d",
+          "name": "Send voice token",
+          "request": {
+            "name": "Send voice token",
+            "description": {
+              "content": "Deliver a one-time password to a recipient as an automated voice call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "otp",
+                "send",
+                "voice"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c2c0c40-5a15-4403-9413-b275ce76344e",
+              "name": "Voice token sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "send",
+                    "voice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pinId\": \"string\",\n  \"to\": \"string\",\n  \"smsStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9342ed10-93eb-47d0-882d-32158109263d",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "send",
+                    "voice"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "001202e6-c683-4439-bbdb-74d42b9d0ae5",
+          "name": "Generate in-app token",
+          "request": {
+            "name": "Generate in-app token",
+            "description": {
+              "content": "Generate an OTP and return it in the JSON response so your application can deliver it through its own channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "otp",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "affc0824-2d0f-454f-9e2f-05b959dbedb5",
+              "name": "Token generated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"data\": {\n    \"pin_id\": \"string\",\n    \"otp\": \"string\",\n    \"phone_number\": \"string\",\n    \"phone_number_other\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34005d0f-5534-4a5a-bfe1-c06ca3f05519",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_type\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"pin_attempts\": \"<integer>\",\n  \"pin_time_to_live\": \"<integer>\",\n  \"pin_length\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d650366c-c324-4277-8d68-d928277e84de",
+          "name": "Verify token",
+          "request": {
+            "name": "Verify token",
+            "description": {
+              "content": "Verify a PIN entered by a customer against a previously issued pin_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "otp",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36003665-9e9f-46e3-ae28-87d729fd0296",
+              "name": "Verification result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_id\": \"c8dcd048-5e7f-4347-8c89-4470c3af0b\",\n  \"pin\": \"195558\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pinId\": \"string\",\n  \"verified\": true,\n  \"msisdn\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e70baaf9-ae3d-4107-a9ff-39b16f3f73a6",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "otp",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"pin_id\": \"c8dcd048-5e7f-4347-8c89-4470c3af0b\",\n  \"pin\": \"195558\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ng.termii.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b854cfb2-0abc-4f1f-a993-2762ac7dab5a",
+    "name": "Termii Campaigns Token API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).\n\nContact Support:\n Name: Termii Support\n Email: support@termii.com",
+      "type": "text/plain"
+    }
+  }
+}

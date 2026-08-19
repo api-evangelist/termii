@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns Contacts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List phonebooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/phonebooks",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "Retrieve all phonebooks on the account with pagination."
+        },
+        {
+          "info": {
+            "name": "Create a phonebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a phonebook"
+        },
+        {
+          "info": {
+            "name": "Update a phonebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.ng.termii.com/api/phonebooks/:phonebook_id",
+            "params": [
+              {
+                "name": "phonebook_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the phonebook."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a phonebook"
+        },
+        {
+          "info": {
+            "name": "Delete a phonebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ng.termii.com/api/phonebooks/:phonebook_id",
+            "params": [
+              {
+                "name": "phonebook_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the phonebook."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "Delete a phonebook"
+        },
+        {
+          "info": {
+            "name": "List contacts in a phonebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/phonebooks/:phonebook_id/contacts",
+            "params": [
+              {
+                "name": "phonebook_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the phonebook."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ]
+          },
+          "docs": "List contacts in a phonebook"
+        },
+        {
+          "info": {
+            "name": "Add a contact to a phonebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks/:phonebook_id/contacts",
+            "params": [
+              {
+                "name": "phonebook_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the phonebook."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a contact to a phonebook"
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.ng.termii.com/api/phonebooks/:phonebook_id/contacts",
+            "params": [
+              {
+                "name": "phonebook_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the phonebook."
+              },
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a contact"
+        },
+        {
+          "info": {
+            "name": "Add contacts via file upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/phonebooks/contacts/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Bulk upload contacts to a phonebook from a CSV file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,666 @@
+{
+  "item": [
+    {
+      "id": "e60d88ac-aa0b-4877-bdef-141884998980",
+      "name": "Campaigns",
+      "description": {
+        "content": "Send, list, and manage SMS campaigns.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cbe75fe3-fe10-458f-9b1e-8221d84cc5c0",
+          "name": "Send a campaign",
+          "request": {
+            "name": "Send a campaign",
+            "description": {
+              "content": "Send an SMS campaign to all contacts in a phonebook, with optional scheduling and link tracking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "campaigns",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"sender_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"message_type\": \"<string>\",\n  \"phonebook_id\": \"<string>\",\n  \"campaign_type\": \"<string>\",\n  \"schedule_sms_status\": \"<string>\",\n  \"enable_link_tracking\": \"<string>\",\n  \"schedule_time\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b56a3455-c89f-4836-9983-92e72f156859",
+              "name": "Campaign created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"sender_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"message_type\": \"<string>\",\n  \"phonebook_id\": \"<string>\",\n  \"campaign_type\": \"<string>\",\n  \"schedule_sms_status\": \"<string>\",\n  \"enable_link_tracking\": \"<string>\",\n  \"schedule_time\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9674ed31-480c-4f4a-b9f8-82eb433ed0a4",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"sender_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"message_type\": \"<string>\",\n  \"phonebook_id\": \"<string>\",\n  \"campaign_type\": \"<string>\",\n  \"schedule_sms_status\": \"<string>\",\n  \"enable_link_tracking\": \"<string>\",\n  \"schedule_time\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c21d38e8-7225-4b24-9bb3-89acb7dc25af",
+          "name": "Fetch campaigns",
+          "request": {
+            "name": "Fetch campaigns",
+            "description": {
+              "content": "Retrieve all campaigns on the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) Your API key from the Termii dashboard."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14c3d5b5-b739-46b8-8995-ed35a40df92e",
+              "name": "A list of campaigns.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"current_page\": 4038,\n  \"data\": [\n    {\n      \"campaign_id\": \"string\",\n      \"phone_book\": \"string\",\n      \"sender\": \"string\",\n      \"camp_type\": \"string\",\n      \"channel\": \"string\",\n      \"total_recipients\": 7405,\n      \"run_at\": \"string\",\n      \"status\": \"string\",\n      \"created_at\": \"string\"\n    },\n    {\n      \"campaign_id\": \"string\",\n      \"phone_book\": \"string\",\n      \"sender\": \"string\",\n      \"camp_type\": \"string\",\n      \"channel\": \"string\",\n      \"total_recipients\": 1083,\n      \"run_at\": \"string\",\n      \"status\": \"string\",\n      \"created_at\": \"string\"\n    }\n  ],\n  \"total\": 3667\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90d4fc25-0587-42f9-b5c6-7e5bec1da281",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d50aa673-3c8b-4672-9c42-ab216f92bfe5",
+          "name": "Fetch campaign history",
+          "request": {
+            "name": "Fetch campaign history",
+            "description": {
+              "content": "Retrieve the message history for a single campaign.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "campaigns",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) Your API key from the Termii dashboard."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) Unique identifier of the campaign."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4920dd1-28eb-496f-8331-24890ff9783f",
+              "name": "Campaign history.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) Unique identifier of the campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"current_page\": 4660,\n  \"data\": [\n    {\n      \"id\": 1999,\n      \"sender\": \"string\",\n      \"receiver\": \"string\",\n      \"message\": \"string\",\n      \"status\": \"string\",\n      \"sms_type\": \"string\",\n      \"send_at\": \"string\"\n    },\n    {\n      \"id\": 9948,\n      \"sender\": \"string\",\n      \"receiver\": \"string\",\n      \"message\": \"string\",\n      \"status\": \"string\",\n      \"sms_type\": \"string\",\n      \"send_at\": \"string\"\n    }\n  ],\n  \"total\": 2929\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f06b6a62-428a-4572-9e11-1908b00ffe81",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) Unique identifier of the campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "511eb5ab-4c54-4f23-8cdf-bf328dbec05e",
+          "name": "Retry a campaign",
+          "request": {
+            "name": "Retry a campaign",
+            "description": {
+              "content": "Retry sending a previously created campaign.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "campaigns",
+                ":campaign_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "campaign_id",
+                  "description": "(Required) Unique identifier of the campaign."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb27420b-7c61-4ac8-a35a-221cc396f28f",
+              "name": "Campaign retry accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) Unique identifier of the campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51ec6507-bd1b-42f3-87bb-50a2ae134bde",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "campaigns",
+                    ":campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "campaign_id",
+                      "description": "(Required) Unique identifier of the campaign."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ng.termii.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "14c3b792-7cc2-4eae-873d-6d7488b8f902",
+    "name": "Termii Campaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).\n\nContact Support:\n Name: Termii Support\n Email: support@termii.com",
+      "type": "text/plain"
+    }
+  }
+}

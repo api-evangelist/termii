@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns Sender IDs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sender IDs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch sender IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ng.termii.com/api/sender-id",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "Your API key from the Termii dashboard."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter sender IDs by name."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter sender IDs by approval status."
+              }
+            ]
+          },
+          "docs": "Retrieve all sender IDs associated with the account, optionally filtered by name and/or status."
+        },
+        {
+          "info": {
+            "name": "Request a sender ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sender-id/request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new alphanumeric sender ID (3-11 characters) to Termii's team for review and approval."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

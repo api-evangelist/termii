@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns Messaging API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a single message to one or more recipients over SMS, WhatsApp, or voice using a registered sender ID."
+        },
+        {
+          "info": {
+            "name": "Send a bulk message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/send/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to up to 100 recipients in a single request. WhatsApp sends may include an optional media object."
+        },
+        {
+          "info": {
+            "name": "Send a message via auto-generated number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/number/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message using an auto-generated messaging number that adapts to the recipient's location. Does not require a registered sender ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

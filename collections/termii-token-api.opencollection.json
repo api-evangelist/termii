@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Termii Campaigns Token API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send token (OTP)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger a randomized one-time password to a recipient across any supported messaging channel, with configurable length, attempts, and time-to-live. Returns a pin_id used to verify the token."
+        },
+        {
+          "info": {
+            "name": "Send voice token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/send/voice",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deliver a one-time password to a recipient as an automated voice call."
+        },
+        {
+          "info": {
+            "name": "Generate in-app token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate an OTP and return it in the JSON response so your application can deliver it through its own channel."
+        },
+        {
+          "info": {
+            "name": "Verify token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ng.termii.com/api/sms/otp/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify a PIN entered by a customer against a previously issued pin_id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

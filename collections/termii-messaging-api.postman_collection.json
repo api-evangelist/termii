@@ -1,0 +1,545 @@
+{
+  "item": [
+    {
+      "id": "c70f9caa-a116-43ba-b619-fdf51b6cb348",
+      "name": "Messaging",
+      "description": {
+        "content": "Send single, bulk, and number-based messages.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a69a0a1d-7719-411b-a557-5c16aa4f58be",
+          "name": "Send a message",
+          "request": {
+            "name": "Send a message",
+            "description": {
+              "content": "Send a single message to one or more recipients over SMS, WhatsApp, or voice using a registered sender ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba0d2b48-9f59-4faa-b3b7-77a008aa83d4",
+              "name": "Message accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message_id\": \"string\",\n  \"message\": \"Successfully Sent\",\n  \"balance\": 2175.1091477402497,\n  \"user\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e8b3e27-d775-4ebe-ae9d-51cb2e5a31df",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d042f52-e6b6-4ffa-aae2-e974ce2d2276",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c48e2529-5911-40df-8c6a-933f127c1678",
+          "name": "Send a bulk message",
+          "request": {
+            "name": "Send a bulk message",
+            "description": {
+              "content": "Send a message to up to 100 recipients in a single request. WhatsApp sends may include an optional media object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "send",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"media\": {\n    \"url\": \"<string>\",\n    \"caption\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "007a7316-144a-4b90-80eb-6dbca4602013",
+              "name": "Bulk message accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "send",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"media\": {\n    \"url\": \"<string>\",\n    \"caption\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message_id\": \"string\",\n  \"message\": \"Successfully Sent\",\n  \"balance\": 2175.1091477402497,\n  \"user\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89d6c601-1136-4abe-96bd-1e470dc00230",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "send",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"from\": \"<string>\",\n  \"sms\": \"<string>\",\n  \"type\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"media\": {\n    \"url\": \"<string>\",\n    \"caption\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72a9e9bd-822b-4984-8492-f4f3e6589a2d",
+          "name": "Send a message via auto-generated number",
+          "request": {
+            "name": "Send a message via auto-generated number",
+            "description": {
+              "content": "Send a message using an auto-generated messaging number that adapts to the recipient's location. Does not require a registered sender ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "number",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"<string>\",\n  \"sms\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2ef6daa-459f-4a29-8429-aae2d40161ac",
+              "name": "Message accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "number",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"2349012672711\",\n  \"sms\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"ok\",\n  \"message_id\": \"string\",\n  \"message\": \"Successfully Sent\",\n  \"balance\": 2034.2560358352146,\n  \"user\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8998cad3-721e-481a-a700-a694b4c94eb4",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "number",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_key\": \"<string>\",\n  \"to\": \"2349012672711\",\n  \"sms\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ng.termii.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "be182e05-fdd8-4fac-b73a-944f3f266cb5",
+    "name": "Termii Campaigns Messaging API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).\n\nContact Support:\n Name: Termii Support\n Email: support@termii.com",
+      "type": "text/plain"
+    }
+  }
+}

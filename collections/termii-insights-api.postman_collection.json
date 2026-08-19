@@ -1,0 +1,490 @@
+{
+  "item": [
+    {
+      "id": "d1859683-d991-4a80-ba36-f4974632d233",
+      "name": "Insights",
+      "description": {
+        "content": "Account balance, message history, and number status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b7e00ce7-6c80-4d69-ad6d-45dd7e0ec04f",
+          "name": "Get account balance",
+          "request": {
+            "name": "Get account balance",
+            "description": {
+              "content": "Retrieve the current wallet balance and currency for the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "get-balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) Your API key from the Termii dashboard."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "710571b6-15ae-497c-8904-efa29a9cc83d",
+              "name": "Account balance.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "get-balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"application\": \"TommyluxuryHair\",\n  \"balance\": 785.57,\n  \"currency\": \"NGN\",\n  \"user\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "951de6b1-6489-469f-9bdb-b7a585fe3dcd",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "get-balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7dfe4126-4a67-47cc-8fd6-8b672c3a9dbb",
+          "name": "Get message history / reports",
+          "request": {
+            "name": "Get message history / reports",
+            "description": {
+              "content": "Retrieve message reports across the account, or a single report when a message_id is supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sms",
+                "inbox"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) Your API key from the Termii dashboard."
+                },
+                {
+                  "disabled": false,
+                  "key": "message_id",
+                  "value": "<string>",
+                  "description": "Filter to a specific message report."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9296771-0aef-45bd-95e3-ac938bab3bef",
+              "name": "Message history.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "inbox"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"sender\": \"string\",\n      \"receiver\": \"string\",\n      \"message\": \"string\",\n      \"amount\": 9217.56536937124,\n      \"reroute\": 5900,\n      \"status\": \"string\",\n      \"sms_type\": \"string\",\n      \"send_by\": \"string\",\n      \"media_url\": \"string\",\n      \"message_id\": \"string\",\n      \"notify_url\": \"string\",\n      \"notify_id\": \"string\",\n      \"created_at\": \"string\"\n    },\n    {\n      \"sender\": \"string\",\n      \"receiver\": \"string\",\n      \"message\": \"string\",\n      \"amount\": 1567.151725762589,\n      \"reroute\": 8872,\n      \"status\": \"string\",\n      \"sms_type\": \"string\",\n      \"send_by\": \"string\",\n      \"media_url\": \"string\",\n      \"message_id\": \"string\",\n      \"notify_url\": \"string\",\n      \"notify_id\": \"string\",\n      \"created_at\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3117e07-2211-4b0d-80bd-c883bb721fb0",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sms",
+                    "inbox"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "message_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57b474c9-a8f9-4c24-be08-8eebd351bbf3",
+          "name": "Query number status",
+          "request": {
+            "name": "Query number status",
+            "description": {
+              "content": "Detect whether a number is fake or has been ported to a new network. Requires activation through an account manager.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insight",
+                "number",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) Your API key from the Termii dashboard."
+                },
+                {
+                  "disabled": false,
+                  "key": "phone_number",
+                  "value": "<string>",
+                  "description": "(Required) Phone number in international format (e.g., 2348753243651)."
+                },
+                {
+                  "disabled": false,
+                  "key": "country_code",
+                  "value": "<string>",
+                  "description": "(Required) ISO 3166-1 alpha-2 country code (e.g., NG)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8155dde1-a500-4a18-adc0-9c67f454cc9f",
+              "name": "Number status result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insight",
+                    "number",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3583,\n  \"message\": \"string\",\n  \"data\": {\n    \"number\": \"string\",\n    \"status\": \"string\",\n    \"network\": \"string\",\n    \"network_code\": \"string\",\n    \"country\": \"string\",\n    \"ported\": 4388\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d46e9fa-7480-43e5-a43c-e1eb02382bdf",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insight",
+                    "number",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ng.termii.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1ee23e49-13cb-4c0d-aec3-6c93c0e78876",
+    "name": "Termii Campaigns Insights API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).\n\nContact Support:\n Name: Termii Support\n Email: support@termii.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -221,6 +221,8 @@ apis:
   humanURL: https://developers.termii.com/messaging-api
   baseURL: https://api.ng.termii.com/api
   tags:
+  - Tokens
+  tags_raw:
   - Token
   properties:
   - type: OpenAPI

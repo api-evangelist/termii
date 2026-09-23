@@ -1,12 +1,7 @@
 {
   "provider": "termii",
   "sources": [
-    "termii-campaigns-api-openapi.yml",
-    "termii-contacts-api-openapi.yml",
-    "termii-insights-api-openapi.yml",
-    "termii-messaging-api-openapi.yml",
-    "termii-sender-ids-api-openapi.yml",
-    "termii-token-api-openapi.yml"
+    "_original/termii-openapi.yml"
   ],
   "outputs": [
     "termii-campaigns-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "termii-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "termii-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "termii-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "termii-insights-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "termii-messaging-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "termii-sender-ids-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "termii-token-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

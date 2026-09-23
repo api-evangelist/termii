@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Termii Campaigns Sender IDs API
+  title: Termii Sender IDs API
   description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
   termsOfService: https://termii.com/terms-and-conditions
   contact:
@@ -74,56 +74,7 @@ paths:
         '400':
           $ref: '#/components/responses/Error'
 components:
-  parameters:
-    ApiKeyQuery:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Your API key from the Termii dashboard.
   schemas:
-    SenderIdList:
-      type: object
-      properties:
-        current_page:
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SenderId'
-        total:
-          type: integer
-    RequestSenderIdRequest:
-      type: object
-      required:
-      - api_key
-      - sender_id
-      - use_case
-      - company
-      properties:
-        api_key:
-          type: string
-        sender_id:
-          type: string
-          description: Alphanumeric sender ID, 3-11 characters.
-        use_case:
-          type: string
-          description: Sample message that will be sent with this sender ID.
-        company:
-          type: string
-          description: Company name associated with the sender ID.
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-    GenericMessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
     SenderId:
       type: object
       properties:
@@ -143,6 +94,47 @@ components:
           type: string
         created_at:
           type: string
+    RequestSenderIdRequest:
+      type: object
+      required:
+      - api_key
+      - sender_id
+      - use_case
+      - company
+      properties:
+        api_key:
+          type: string
+        sender_id:
+          type: string
+          description: Alphanumeric sender ID, 3-11 characters.
+        use_case:
+          type: string
+          description: Sample message that will be sent with this sender ID.
+        company:
+          type: string
+          description: Company name associated with the sender ID.
+    SenderIdList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SenderId'
+        total:
+          type: integer
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
   responses:
     Error:
       description: Error response.
@@ -150,6 +142,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

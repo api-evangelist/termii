@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Termii Campaigns Token API
+  title: Termii Token API
   description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
   termsOfService: https://termii.com/terms-and-conditions
   contact:
@@ -107,68 +107,49 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    InAppTokenRequest:
+    VerifyTokenRequest:
       type: object
       required:
       - api_key
-      - pin_type
-      - phone_number
-      - pin_attempts
-      - pin_time_to_live
-      - pin_length
+      - pin_id
+      - pin
       properties:
         api_key:
           type: string
-        pin_type:
+        pin_id:
           type: string
-          enum:
-          - NUMERIC
-          - ALPHANUMERIC
-        phone_number:
+          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
+        pin:
           type: string
-          description: Recipient phone number in international format.
-        pin_attempts:
-          type: integer
-          minimum: 1
-        pin_time_to_live:
-          type: integer
-          minimum: 0
-          maximum: 60
-        pin_length:
-          type: integer
-          minimum: 4
-          maximum: 8
-    VoiceTokenRequest:
-      type: object
-      required:
-      - api_key
-      - phone_number
-      - pin_attempts
-      - pin_time_to_live
-      - pin_length
-      properties:
-        api_key:
-          type: string
-        phone_number:
-          type: string
-          description: Recipient phone number in international format.
-        pin_attempts:
-          type: integer
-          minimum: 1
-        pin_time_to_live:
-          type: integer
-          minimum: 0
-          maximum: 60
-        pin_length:
-          type: integer
-          minimum: 4
-          maximum: 8
-    ErrorResponse:
+          example: '195558'
+    InAppTokenResponse:
       type: object
       properties:
-        message:
+        status:
           type: string
-          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            pin_id:
+              type: string
+            otp:
+              type: string
+            phone_number:
+              type: string
+            phone_number_other:
+              type: string
+    VerifyTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        verified:
+          oneOf:
+          - type: boolean
+          - type: string
+          description: Verification result or status (e.g., "Expired").
+        msisdn:
+          type: string
     SendTokenRequest:
       type: object
       required:
@@ -222,22 +203,37 @@ components:
         message_text:
           type: string
           description: Message body containing the pin_placeholder.
-    InAppTokenResponse:
+    VoiceTokenRequest:
+      type: object
+      required:
+      - api_key
+      - phone_number
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
+      properties:
+        api_key:
+          type: string
+        phone_number:
+          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
+    ErrorResponse:
       type: object
       properties:
-        status:
+        message:
           type: string
-        data:
-          type: object
-          properties:
-            pin_id:
-              type: string
-            otp:
-              type: string
-            phone_number:
-              type: string
-            phone_number_other:
-              type: string
+          description: Human-readable error message.
     SendTokenResponse:
       type: object
       properties:
@@ -247,33 +243,37 @@ components:
           type: string
         smsStatus:
           type: string
-    VerifyTokenRequest:
+    InAppTokenRequest:
       type: object
       required:
       - api_key
-      - pin_id
-      - pin
+      - pin_type
+      - phone_number
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
       properties:
         api_key:
           type: string
-        pin_id:
+        pin_type:
           type: string
-          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
-        pin:
+          enum:
+          - NUMERIC
+          - ALPHANUMERIC
+        phone_number:
           type: string
-          example: '195558'
-    VerifyTokenResponse:
-      type: object
-      properties:
-        pinId:
-          type: string
-        verified:
-          oneOf:
-          - type: boolean
-          - type: string
-          description: Verification result or status (e.g., "Expired").
-        msisdn:
-          type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
   responses:
     Error:
       description: Error response.

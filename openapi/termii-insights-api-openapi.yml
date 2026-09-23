@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Termii Campaigns Insights API
+  title: Termii Insights API
   description: REST API for the Termii multichannel messaging platform. Send SMS, voice, and WhatsApp messages; generate and verify one-time passwords (OTP) for customer verification; manage sender IDs, campaigns, and contact phonebooks; and retrieve insights such as account balance, message reports, and number status. Every request authenticates with an `api_key` supplied in the JSON request body (for POST/PATCH/DELETE) or as a query parameter (for GET).
   termsOfService: https://termii.com/terms-and-conditions
   contact:
@@ -90,35 +90,36 @@ paths:
         '401':
           $ref: '#/components/responses/Error'
 components:
-  parameters:
-    ApiKeyQuery:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Your API key from the Termii dashboard.
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    BalanceResponse:
+    NumberStatusResponse:
       type: object
       properties:
-        application:
-          type: string
-          example: TommyluxuryHair
-        balance:
-          type: number
-          example: 785.57
-        currency:
-          type: string
-          example: NGN
-        user:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
+        status:
+          type: integer
         message:
           type: string
-          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            network:
+              type: string
+            network_code:
+              type: string
+            country:
+              type: string
+            ported:
+              type: integer
     MessageHistory:
       type: object
       properties:
@@ -153,35 +154,34 @@ components:
                 type: string
               created_at:
                 type: string
-    NumberStatusResponse:
+    ErrorResponse:
       type: object
       properties:
-        status:
-          type: integer
         message:
           type: string
-        data:
-          type: object
-          properties:
-            number:
-              type: string
-            status:
-              type: string
-            network:
-              type: string
-            network_code:
-              type: string
-            country:
-              type: string
-            ported:
-              type: integer
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+          description: Human-readable error message.
+    BalanceResponse:
+      type: object
+      properties:
+        application:
+          type: string
+          example: TommyluxuryHair
+        balance:
+          type: number
+          example: 785.57
+        currency:
+          type: string
+          example: NGN
+        user:
+          type: string
+  parameters:
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

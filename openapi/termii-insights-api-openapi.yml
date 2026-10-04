@@ -91,6 +91,48 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
+    BalanceResponse:
+      type: object
+      properties:
+        application:
+          type: string
+          example: TommyluxuryHair
+        balance:
+          type: number
+          example: 785.57
+        currency:
+          type: string
+          example: NGN
+        user:
+          type: string
+    NumberStatusResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            network:
+              type: string
+            network_code:
+              type: string
+            country:
+              type: string
+            ported:
+              type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
     MessageHistory:
       type: object
       properties:
@@ -125,48 +167,6 @@ components:
                 type: string
               created_at:
                 type: string
-    BalanceResponse:
-      type: object
-      properties:
-        application:
-          type: string
-          example: TommyluxuryHair
-        balance:
-          type: number
-          example: 785.57
-        currency:
-          type: string
-          example: NGN
-        user:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-    NumberStatusResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            number:
-              type: string
-            status:
-              type: string
-            network:
-              type: string
-            network_code:
-              type: string
-            country:
-              type: string
-            ported:
-              type: integer
   parameters:
     ApiKeyQuery:
       name: api_key

@@ -107,33 +107,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    VerifyTokenResponse:
-      type: object
-      properties:
-        pinId:
-          type: string
-        verified:
-          oneOf:
-          - type: boolean
-          - type: string
-          description: Verification result or status (e.g., "Expired").
-        msisdn:
-          type: string
-    VerifyTokenRequest:
-      type: object
-      required:
-      - api_key
-      - pin_id
-      - pin
-      properties:
-        api_key:
-          type: string
-        pin_id:
-          type: string
-          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
-        pin:
-          type: string
-          example: '195558'
     InAppTokenRequest:
       type: object
       required:
@@ -165,6 +138,21 @@ components:
           type: integer
           minimum: 4
           maximum: 8
+    VerifyTokenRequest:
+      type: object
+      required:
+      - api_key
+      - pin_id
+      - pin
+      properties:
+        api_key:
+          type: string
+        pin_id:
+          type: string
+          example: c8dcd048-5e7f-4347-8c89-4470c3af0b
+        pin:
+          type: string
+          example: '195558'
     VoiceTokenRequest:
       type: object
       required:
@@ -190,22 +178,6 @@ components:
           type: integer
           minimum: 4
           maximum: 8
-    InAppTokenResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        data:
-          type: object
-          properties:
-            pin_id:
-              type: string
-            otp:
-              type: string
-            phone_number:
-              type: string
-            phone_number_other:
-              type: string
     SendTokenRequest:
       type: object
       required:
@@ -274,6 +246,34 @@ components:
           type: string
         smsStatus:
           type: string
+    VerifyTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        verified:
+          oneOf:
+          - type: boolean
+          - type: string
+          description: Verification result or status (e.g., "Expired").
+        msisdn:
+          type: string
+    InAppTokenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            pin_id:
+              type: string
+            otp:
+              type: string
+            phone_number:
+              type: string
+            phone_number_other:
+              type: string
   responses:
     Error:
       description: Error response.

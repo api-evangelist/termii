@@ -75,47 +75,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    SenderIdList:
-      type: object
-      properties:
-        current_page:
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SenderId'
-        total:
-          type: integer
-    GenericMessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-    RequestSenderIdRequest:
-      type: object
-      required:
-      - api_key
-      - sender_id
-      - use_case
-      - company
-      properties:
-        api_key:
-          type: string
-        sender_id:
-          type: string
-          description: Alphanumeric sender ID, 3-11 characters.
-        use_case:
-          type: string
-          description: Sample message that will be sent with this sender ID.
-        company:
-          type: string
-          description: Company name associated with the sender ID.
     SenderId:
       type: object
       properties:
@@ -135,6 +94,47 @@ components:
           type: string
         created_at:
           type: string
+    RequestSenderIdRequest:
+      type: object
+      required:
+      - api_key
+      - sender_id
+      - use_case
+      - company
+      properties:
+        api_key:
+          type: string
+        sender_id:
+          type: string
+          description: Alphanumeric sender ID, 3-11 characters.
+        use_case:
+          type: string
+          description: Sample message that will be sent with this sender ID.
+        company:
+          type: string
+          description: Company name associated with the sender ID.
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    SenderIdList:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SenderId'
+        total:
+          type: integer
   parameters:
     ApiKeyQuery:
       name: api_key

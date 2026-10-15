@@ -20,7 +20,7 @@
     matched_domain: termii.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: termii-whatsapp
   label: WhatsApp
@@ -39,5 +39,30 @@
     matched_domain: whatsapp.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
+  status: not-a-workflow
+  arazzo: null
+- slug: termii-zapier
+  label: Zapier
+  partner: zapier
+  partner_name: Zapier
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  evidence: https://zapier.com/apps/termii/integrations
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Termii
+    matched_domain: termii.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: termii
+    beta: false
+    builder: unknown (not in the directory record)
   status: pending-generation
   arazzo: null

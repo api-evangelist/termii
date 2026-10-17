@@ -87,22 +87,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    SendNumberRequest:
-      type: object
-      required:
-      - api_key
-      - to
-      - sms
-      properties:
-        api_key:
-          type: string
-        to:
-          type: string
-          description: Destination phone number in international format.
-          example: '2349012672711'
-        sms:
-          type: string
-          description: Message text to send.
     ErrorResponse:
       type: object
       properties:
@@ -115,6 +99,18 @@ components:
         code:
           type: string
           example: ok
+        message_id:
+          type: string
+        message:
+          type: string
+          example: Successfully Sent
+        balance:
+          type: number
+        user:
+          type: string
+    SendMessageResponse:
+      type: object
+      properties:
         message_id:
           type: string
         message:
@@ -169,18 +165,22 @@ components:
         caption:
           type: string
           description: Caption for the attachment.
-    SendMessageResponse:
+    SendNumberRequest:
       type: object
+      required:
+      - api_key
+      - to
+      - sms
       properties:
-        message_id:
+        api_key:
           type: string
-        message:
+        to:
           type: string
-          example: Successfully Sent
-        balance:
-          type: number
-        user:
+          description: Destination phone number in international format.
+          example: '2349012672711'
+        sms:
           type: string
+          description: Message text to send.
     SendMessageRequest:
       type: object
       required:

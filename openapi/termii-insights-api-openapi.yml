@@ -91,6 +91,12 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
     BalanceResponse:
       type: object
       properties:
@@ -105,34 +111,6 @@ components:
           example: NGN
         user:
           type: string
-    NumberStatusResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            number:
-              type: string
-            status:
-              type: string
-            network:
-              type: string
-            network_code:
-              type: string
-            country:
-              type: string
-            ported:
-              type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
     MessageHistory:
       type: object
       properties:
@@ -167,6 +145,35 @@ components:
                 type: string
               created_at:
                 type: string
+    NumberStatusResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            number:
+              type: string
+            status:
+              type: string
+            network:
+              type: string
+            network_code:
+              type: string
+            country:
+              type: string
+            ported:
+              type: integer
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     ApiKeyQuery:
       name: api_key
@@ -175,13 +182,6 @@ components:
       schema:
         type: string
       description: Your API key from the Termii dashboard.
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

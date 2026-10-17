@@ -100,22 +100,42 @@ paths:
         '400':
           $ref: '#/components/responses/Error'
 components:
-  parameters:
-    CampaignId:
-      name: campaign_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the campaign.
-    ApiKeyQuery:
-      name: api_key
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Your API key from the Termii dashboard.
   schemas:
+    ApiKeyBody:
+      type: object
+      required:
+      - api_key
+      properties:
+        api_key:
+          type: string
+          description: Your API key from the Termii dashboard.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+    Campaign:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+        phone_book:
+          type: string
+        sender:
+          type: string
+        camp_type:
+          type: string
+        channel:
+          type: string
+        total_recipients:
+          type: integer
+        run_at:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
     CampaignHistory:
       type: object
       properties:
@@ -142,11 +162,6 @@ components:
                 type: string
         total:
           type: integer
-    GenericMessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
     CampaignList:
       type: object
       properties:
@@ -158,20 +173,11 @@ components:
             $ref: '#/components/schemas/Campaign'
         total:
           type: integer
-    ErrorResponse:
+    GenericMessageResponse:
       type: object
       properties:
         message:
           type: string
-          description: Human-readable error message.
-    ApiKeyBody:
-      type: object
-      required:
-      - api_key
-      properties:
-        api_key:
-          type: string
-          description: Your API key from the Termii dashboard.
     SendCampaignRequest:
       type: object
       required:
@@ -220,27 +226,21 @@ components:
         schedule_time:
           type: string
           description: Optional. Time to send a scheduled campaign.
-    Campaign:
-      type: object
-      properties:
-        campaign_id:
-          type: string
-        phone_book:
-          type: string
-        sender:
-          type: string
-        camp_type:
-          type: string
-        channel:
-          type: string
-        total_recipients:
-          type: integer
-        run_at:
-          type: string
-        status:
-          type: string
-        created_at:
-          type: string
+  parameters:
+    CampaignId:
+      name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the campaign.
+    ApiKeyQuery:
+      name: api_key
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your API key from the Termii dashboard.
   responses:
     Error:
       description: Error response.

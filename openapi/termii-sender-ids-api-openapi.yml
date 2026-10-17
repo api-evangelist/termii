@@ -75,25 +75,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    SenderId:
-      type: object
-      properties:
-        sender_id:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - pending
-          - blocked
-        company:
-          type: string
-        usecase:
-          type: string
-        country:
-          type: string
-        created_at:
-          type: string
     RequestSenderIdRequest:
       type: object
       required:
@@ -113,17 +94,36 @@ components:
         company:
           type: string
           description: Company name associated with the sender ID.
-    GenericMessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
           description: Human-readable error message.
+    SenderId:
+      type: object
+      properties:
+        sender_id:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - pending
+          - blocked
+        company:
+          type: string
+        usecase:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+    GenericMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
     SenderIdList:
       type: object
       properties:
@@ -135,6 +135,13 @@ components:
             $ref: '#/components/schemas/SenderId'
         total:
           type: integer
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     ApiKeyQuery:
       name: api_key
@@ -143,13 +150,6 @@ components:
       schema:
         type: string
       description: Your API key from the Termii dashboard.
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

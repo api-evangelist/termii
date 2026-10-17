@@ -107,37 +107,12 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    InAppTokenRequest:
+    ErrorResponse:
       type: object
-      required:
-      - api_key
-      - pin_type
-      - phone_number
-      - pin_attempts
-      - pin_time_to_live
-      - pin_length
       properties:
-        api_key:
+        message:
           type: string
-        pin_type:
-          type: string
-          enum:
-          - NUMERIC
-          - ALPHANUMERIC
-        phone_number:
-          type: string
-          description: Recipient phone number in international format.
-        pin_attempts:
-          type: integer
-          minimum: 1
-        pin_time_to_live:
-          type: integer
-          minimum: 0
-          maximum: 60
-        pin_length:
-          type: integer
-          minimum: 4
-          maximum: 8
+          description: Human-readable error message.
     VerifyTokenRequest:
       type: object
       required:
@@ -153,6 +128,18 @@ components:
         pin:
           type: string
           example: '195558'
+    VerifyTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        verified:
+          oneOf:
+          - type: boolean
+          - type: string
+          description: Verification result or status (e.g., "Expired").
+        msisdn:
+          type: string
     VoiceTokenRequest:
       type: object
       required:
@@ -178,6 +165,31 @@ components:
           type: integer
           minimum: 4
           maximum: 8
+    InAppTokenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            pin_id:
+              type: string
+            otp:
+              type: string
+            phone_number:
+              type: string
+            phone_number_other:
+              type: string
+    SendTokenResponse:
+      type: object
+      properties:
+        pinId:
+          type: string
+        to:
+          type: string
+        smsStatus:
+          type: string
     SendTokenRequest:
       type: object
       required:
@@ -231,49 +243,37 @@ components:
         message_text:
           type: string
           description: Message body containing the pin_placeholder.
-    ErrorResponse:
+    InAppTokenRequest:
       type: object
+      required:
+      - api_key
+      - pin_type
+      - phone_number
+      - pin_attempts
+      - pin_time_to_live
+      - pin_length
       properties:
-        message:
+        api_key:
           type: string
-          description: Human-readable error message.
-    SendTokenResponse:
-      type: object
-      properties:
-        pinId:
+        pin_type:
           type: string
-        to:
+          enum:
+          - NUMERIC
+          - ALPHANUMERIC
+        phone_number:
           type: string
-        smsStatus:
-          type: string
-    VerifyTokenResponse:
-      type: object
-      properties:
-        pinId:
-          type: string
-        verified:
-          oneOf:
-          - type: boolean
-          - type: string
-          description: Verification result or status (e.g., "Expired").
-        msisdn:
-          type: string
-    InAppTokenResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        data:
-          type: object
-          properties:
-            pin_id:
-              type: string
-            otp:
-              type: string
-            phone_number:
-              type: string
-            phone_number_other:
-              type: string
+          description: Recipient phone number in international format.
+        pin_attempts:
+          type: integer
+          minimum: 1
+        pin_time_to_live:
+          type: integer
+          minimum: 0
+          maximum: 60
+        pin_length:
+          type: integer
+          minimum: 4
+          maximum: 8
   responses:
     Error:
       description: Error response.
